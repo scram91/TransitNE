@@ -9,5 +9,10 @@ namespace TransitNE.Controllers
         {
             return View();
         }
+
+        public IActionResult RouteMap()
+        {
+            return View();
+        }
     }
 }
