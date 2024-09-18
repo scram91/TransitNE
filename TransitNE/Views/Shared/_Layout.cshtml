@@ -30,10 +30,6 @@
                                 asp-action="Index">Route Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login"
-                                asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="RouteInformation"
                                 asp-action="RouteMap">Route Maps</a>
                         </li>
@@ -42,6 +38,7 @@
                                 asp-action="Index">Tickets</a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
