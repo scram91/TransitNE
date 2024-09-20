@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using TransitNE.Areas.Identity.Data;
+using TransitNE.Data;
 
 namespace TransitNE.Areas.Identity.Pages.Account
 {

@@ -21,4 +21,8 @@
 		<InternalsVisibleTo Include="TransitNETesting" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Enums\" />
+	</ItemGroup>
+
 </Project>
