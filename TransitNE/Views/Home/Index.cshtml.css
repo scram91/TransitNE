@@ -1,0 +1,215 @@
+﻿.hero-image {
+    display: flex;
+    flex-direction: column;
+    height: 163px;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-space-800);
+    padding: var(--size-space-4000) var(--size-space-600) var(--size-space-4000) var(--size-space-600);
+    position: relative;
+    background-color: #ffffff;
+    background-image: url(./img/hero-image.png);
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+    .hero-image .text-content-title {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--size-space-200);
+        position: relative;
+        flex: 0 0 auto;
+        margin-top: -144.5px;
+        margin-bottom: -144.5px;
+    }
+
+    .hero-image .title {
+        position: relative;
+        align-self: stretch;
+        margin-top: -1px;
+        font-family: var(--title-hero-font-family);
+        font-weight: var(--title-hero-font-weight);
+        color: var(--color-text-utilities-text-on-overlay);
+        font-size: var(--title-hero-font-size);
+        text-align: center;
+        letter-spacing: var(--title-hero-letter-spacing);
+        line-height: var(--title-hero-line-height);
+        font-style: var(--title-hero-font-style);
+    }
+
+    .hero-image .subtitle {
+        position: relative;
+        align-self: stretch;
+        font-family: var(--subtitle-font-family);
+        font-weight: var(--subtitle-font-weight);
+        color: var(--color-text-utilities-text-on-overlay);
+        font-size: var(--subtitle-font-size);
+        text-align: center;
+        letter-spacing: var(--subtitle-letter-spacing);
+        line-height: var(--subtitle-line-height);
+        font-style: var(--subtitle-font-style);
+    }
+
+.panel-image-double {
+    display: inline-flex;
+    width: 100%;
+    height: 478px;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 64px;
+    position: relative;
+    background-color: #757575;
+    opacity: 0.80;
+    justify-content: flex-start;
+}
+
+    .panel-image-double .image {
+        position: relative;
+        flex: 1;
+        align-self: stretch;
+        flex-grow: 1;
+        background-image: url(./img/image-2.png);
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+
+    .panel-image-double .div {
+        position: relative;
+        flex: 1;
+        align-self: stretch;
+        flex-grow: 1;
+        background-image: url(./img/image.png);
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+
+.card-grid-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--size-space-1200);
+    padding: var(--size-space-1600);
+    position: relative;
+    background-color: var(--color-background-default-default);
+}
+
+    .card-grid-icon .text-content-heading {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--size-space-200);
+        position: relative;
+        flex: 0 0 auto;
+    }
+
+    .card-grid-icon .text-wrapper {
+        position: relative;
+        align-self: stretch;
+        margin-top: -1px;
+        font-family: var(--heading-font-family);
+        font-weight: var(--heading-font-weight);
+        color: var(--color-text-default-default);
+        font-size: var(--heading-font-size);
+        letter-spacing: var(--heading-letter-spacing);
+        line-height: var(--heading-line-height);
+        font-style: var(--heading-font-style);
+    }
+
+    .card-grid-icon .subheading {
+        position: relative;
+        align-self: stretch;
+        font-family: var(--subheading-font-family);
+        font-weight: var(--subheading-font-weight);
+        color: var(--color-text-default-secondary);
+        font-size: var(--subheading-font-size);
+        letter-spacing: var(--subheading-letter-spacing);
+        line-height: var(--subheading-line-height);
+        font-style: var(--subheading-font-style);
+    }
+
+    .card-grid-icon .cards {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--size-space-1600);
+        position: relative;
+        flex: 0 0 auto;
+    }
+
+    .card-grid-icon .card {
+        display: flex;
+        flex-wrap: wrap;
+        width: 301.33px;
+        align-items: flex-start;
+        gap: var(--size-space-600);
+        position: relative;
+    }
+
+    .card-grid-icon .img {
+        position: relative;
+        width: 32px;
+        height: 32px;
+    }
+
+    .card-grid-icon .body {
+        display: flex;
+        flex-direction: column;
+        min-width: 160px;
+        align-items: flex-start;
+        gap: var(--size-space-400);
+        position: relative;
+        flex: 1;
+        flex-grow: 1;
+    }
+
+    .card-grid-icon .text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--size-space-200);
+        position: relative;
+        align-self: stretch;
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .card-grid-icon .body-text-for {
+        position: relative;
+        align-self: stretch;
+        font-family: var(--body-base-font-family);
+        font-weight: var(--body-base-font-weight);
+        color: var(--color-text-default-secondary);
+        font-size: var(--body-base-font-size);
+        letter-spacing: var(--body-base-letter-spacing);
+        line-height: var(--body-base-line-height);
+        font-style: var(--body-base-font-style);
+    }
+
+    .card-grid-icon .div {
+        display: inline-flex;
+        min-width: 240px;
+        flex: 0 0 auto;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 24px 24px;
+        position: relative;
+    }
+
+    .card-grid-icon .div-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 265.33px;
+        align-items: flex-start;
+        gap: var(--size-space-400);
+        position: relative;
+    }
+
+    .card-grid-icon .card-2 {
+        display: flex;
+        width: 321.33px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: var(--size-space-600);
+        position: relative;
+    }
