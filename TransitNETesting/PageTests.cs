@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Logging;
-using System.Security.Policy;
 
-namespace TransitNETesting
-{
+namespace TransitNETesting;
+
     public class PageTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
@@ -45,4 +41,3 @@ namespace TransitNETesting
             Assert.Equal(200, code);
         }
     }
-}
