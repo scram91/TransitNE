@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home";
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -8,6 +9,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="globals.css" />
     <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,8 +20,8 @@
         </div>
     </div>
         <div class="panel-image-double">
-            <div class="left-image"></div>
-            <div class="right-image"></div>
+        <img class="left-image" src="~/Images/Philadelphia.jpg" alt="Philadelphia" width="632px" height="350px"/>
+            <img class="right-image" src="~/Images/NYC.jpg" alt="NYC" width="632px" height="350px" />
         </div>
         <div class="card-grid-icon">
             <div class="text-content-heading">
