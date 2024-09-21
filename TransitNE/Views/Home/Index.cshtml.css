@@ -1,215 +1,248 @@
 ﻿.hero-image {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
     height: 163px;
-    align-items: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top:160px;
+    padding-bottom: 160px;
+    background: linear-gradient(0deg, white 0%, white 100%);
+    flex-direction: column;
     justify-content: center;
-    gap: var(--size-space-800);
-    padding: var(--size-space-4000) var(--size-space-600) var(--size-space-4000) var(--size-space-600);
-    position: relative;
-    background-color: #ffffff;
-    background-image: url(./img/hero-image.png);
-    background-size: cover;
-    background-position: 50% 50%;
+    align-items: center;
+    gap: 32px;
+    display: inline-flex
 }
 
     .hero-image .text-content-title {
-        display: inline-flex;
         flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
-        gap: var(--size-space-200);
-        position: relative;
-        flex: 0 0 auto;
-        margin-top: -144.5px;
-        margin-bottom: -144.5px;
+        gap: 8px;
+        display: flex;
     }
 
     .hero-image .title {
-        position: relative;
         align-self: stretch;
-        margin-top: -1px;
-        font-family: var(--title-hero-font-family);
-        font-weight: var(--title-hero-font-weight);
-        color: var(--color-text-utilities-text-on-overlay);
-        font-size: var(--title-hero-font-size);
+        font-family: Arial;
+        font-weight: 700;
+        color: #0C0C0D;
+        font-size: 72px;
         text-align: center;
-        letter-spacing: var(--title-hero-letter-spacing);
-        line-height: var(--title-hero-line-height);
-        font-style: var(--title-hero-font-style);
+        line-height: 86.40px;
+        word-wrap: break-word;
     }
 
     .hero-image .subtitle {
-        position: relative;
         align-self: stretch;
-        font-family: var(--subtitle-font-family);
-        font-weight: var(--subtitle-font-weight);
-        color: var(--color-text-utilities-text-on-overlay);
-        font-size: var(--subtitle-font-size);
+        font-family: Arial;
+        font-weight: 400;
+        color: #0C0C0D;
+        font-size: 32px;
         text-align: center;
-        letter-spacing: var(--subtitle-letter-spacing);
-        line-height: var(--subtitle-line-height);
-        font-style: var(--subtitle-font-style);
+        line-height: 38.40px;
+        word-wrap: break-word;
     }
 
 .panel-image-double {
-    display: inline-flex;
     width: 100%;
-    height: 478px;
+    height: 478px; 
+    padding: 64px; 
+    opacity: 0.80;
+    background: #757575;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 48px;
-    padding: 64px;
-    position: relative;
-    background-color: #757575;
-    opacity: 0.80;
-    justify-content: flex-start;
+    display: inline-flex;
 }
 
-    .panel-image-double .image {
-        position: relative;
-        flex: 1;
+    .panel-image-double .left-image {
         align-self: stretch;
-        flex-grow: 1;
-        background-image: url(./img/image-2.png);
-        background-size: cover;
-        background-position: 50% 50%;
+        flex: 1 1 0;
     }
 
-    .panel-image-double .div {
-        position: relative;
-        flex: 1;
+    .panel-image-double .right-image {
         align-self: stretch;
-        flex-grow: 1;
-        background-image: url(./img/image.png);
-        background-size: cover;
-        background-position: 50% 50%;
+        flex: 1 1 0;
     }
 
 .card-grid-icon {
-    display: flex;
+    width: 100%;
+    height: 428px;
+    padding: 64px;
+    background: white;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
-    gap: var(--size-space-1200);
-    padding: var(--size-space-1600);
-    position: relative;
-    background-color: var(--color-background-default-default);
+    gap: 48px;
+    display: inline-flex;
 }
 
     .card-grid-icon .text-content-heading {
-        display: inline-flex;
         flex-direction: column;
+        justify-content: flex-start;
         align-items: flex-start;
-        gap: var(--size-space-200);
-        position: relative;
-        flex: 0 0 auto;
+        gap: 8px;
+        display: flex;
     }
 
-    .card-grid-icon .text-wrapper {
-        position: relative;
+    .card-grid-icon .heading {
         align-self: stretch;
-        margin-top: -1px;
-        font-family: var(--heading-font-family);
-        font-weight: var(--heading-font-weight);
-        color: var(--color-text-default-default);
-        font-size: var(--heading-font-size);
-        letter-spacing: var(--heading-letter-spacing);
-        line-height: var(--heading-line-height);
-        font-style: var(--heading-font-style);
+        color: #1E1E1E;
+        font-size: 24px;
+        font-family: Arial;
+        font-weight: 600;
+        line-height: 28.80px;
+        word-wrap: break-word;
     }
 
     .card-grid-icon .subheading {
-        position: relative;
         align-self: stretch;
-        font-family: var(--subheading-font-family);
-        font-weight: var(--subheading-font-weight);
-        color: var(--color-text-default-secondary);
-        font-size: var(--subheading-font-size);
-        letter-spacing: var(--subheading-letter-spacing);
-        line-height: var(--subheading-line-height);
-        font-style: var(--subheading-font-style);
+        color: #757575;
+        font-size: 20px;
+        font-family: Arial;
+        font-weight: 400;
+        line-height: 24px;
+        word-wrap: break-word;
     }
 
     .card-grid-icon .cards {
-        display: inline-flex;
-        flex-wrap: wrap;
+        justify-content: flex-start;
         align-items: center;
-        gap: var(--size-space-1600);
-        position: relative;
-        flex: 0 0 auto;
+        gap: 64px;
+        display: inline-flex;
     }
 
     .card-grid-icon .card {
-        display: flex;
-        flex-wrap: wrap;
-        width: 301.33px;
+        width: 301px;
+        height: 194px;
+        justify-content: flex-start;
         align-items: flex-start;
-        gap: var(--size-space-600);
-        position: relative;
+        gap: 24px;
+        display: inline-flex;
     }
 
-    .card-grid-icon .img {
+    .card-grid-icon .alertTriangle {
         position: relative;
         width: 32px;
         height: 32px;
     }
 
+    .card-grid-icon .img {
+        width: 27.86px;
+        height: 24.14px;
+        left: 2.07px;
+        top: 3.86px;
+        position: absolute;
+        border: 3px #1E1E1E solid;
+    }
+
     .card-grid-icon .body {
-        display: flex;
+        flex: 1 1 0;
         flex-direction: column;
-        min-width: 160px;
+        justify-content: flex-start;
         align-items: flex-start;
-        gap: var(--size-space-400);
-        position: relative;
-        flex: 1;
-        flex-grow: 1;
+        gap: 16px;
+        display: inline-flex;
     }
 
     .card-grid-icon .text {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--size-space-200);
-        position: relative;
         align-self: stretch;
-        width: 100%;
-        flex: 0 0 auto;
+        height: 103px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
+    }
+    .card-grid-icon .card-header {
+        align-self: stretch;
+        color: #1E1E1E;
+        font-size: 24px;
+        font-family: Arial;
+        font-weight: 600;
+        line-height: 28.80px;
+        word-wrap: break-word;
     }
 
     .card-grid-icon .body-text-for {
-        position: relative;
         align-self: stretch;
-        font-family: var(--body-base-font-family);
-        font-weight: var(--body-base-font-weight);
-        color: var(--color-text-default-secondary);
-        font-size: var(--body-base-font-size);
-        letter-spacing: var(--body-base-letter-spacing);
-        line-height: var(--body-base-line-height);
-        font-style: var(--body-base-font-style);
+        color: #757575;
+        font-size: 16px;
+        font-family: Arial;
+        font-weight: 400;
+        line-height: 22.40px;
+        word-wrap: break-word;
     }
 
-    .card-grid-icon .div {
-        display: inline-flex;
-        min-width: 240px;
-        flex: 0 0 auto;
-        flex-wrap: wrap;
+    .card-grid-icon .card-1 {
+        height: 194px;
+        justify-content: flex-start;
         align-items: flex-start;
-        gap: 24px 24px;
-        position: relative;
-    }
-
-    .card-grid-icon .div-wrapper {
+        gap: 24px;
         display: flex;
-        flex-direction: column;
-        width: 265.33px;
-        align-items: flex-start;
-        gap: var(--size-space-400);
+    }
+    .card-grid-icon .today {
         position: relative;
+        width: 32px;
+        height: 32px;
+    }
+    .card-grid-icon .card-1-img {
+        width: 24px;
+        height: 26.67px;
+        left: 4px;
+        top: 2.67px;
+        position: absolute;
+        background: #1D1B20;
+    }
+
+    .card-grid-icon .card-1-body {
+        flex: 1 1 0;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 16px;
+        display: flex;
+    }
+
+    .card-grid-icon .card-1-text {
+        align-self: stretch;
+        height: 81px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
     }
 
     .card-grid-icon .card-2 {
+        width: 322px;
+        height: 194px;
+        justify-content: flex-start;
+        gap: 24px;
         display: flex;
-        width: 321.33px;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        gap: var(--size-space-600);
+    }
+
+    .card-grid-icon .info {
         position: relative;
+        width: 32px;
+        height: 32px;
+    }
+
+    .card-grid-icon .card-2-img {
+        width: 26.67px;
+        height: 26.67px;
+        left: 2.67px;
+        top: 2.67px;
+        position: absolute;
+        border: 3px #1E1E1E solid;
+    }
+
+    .card-grid-icon .card-1-text {
+        align-self: stretch;
+        height: 191px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
     }

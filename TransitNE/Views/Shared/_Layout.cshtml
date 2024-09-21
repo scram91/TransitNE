@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/StyleSheet.css" />
 </head>
 
 <body>
@@ -42,17 +43,76 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="landing-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - North East Transit - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="footer">
+        <div class="title">
+            <div class="arrow-icon"></div>
         </div>
-    </footer>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Use</div>
+                </div>
+            </div>
+            <div class="user-guide">
+                <div class="list-item">User Guide</div>
+            </div>
+            <div class="septa-site">
+                <div class="list-item">Septa Site</div>
+            </div>
+            <div class="nj-transit-site">
+                <div class="list-item">NJ Transit Site</div>
+            </div>
+            <div class="patco-site">
+                <div class="list-item">Patco Site</div>
+            </div>
+            <div class="bottom-text-list-item"></div>
+        </div>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Explore</div>
+                </div>
+            </div>
+            <div class="schedule">
+                <div class="list-item">Schedules</div>
+            </div>
+            <div class="ticketing">
+                <div class="list-item">Ticketing</div>
+            </div>
+            <div class="route-maps">
+                <div class="list-item">Route Maps</div>
+            </div>
+            <div class="trip-planner">
+                <div class="list-item">Trip Planner</div>
+            </div>
+            <div class="text-list-item"></div>
+        </div>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Resources</div>
+                </div>
+            </div>
+            <div class="blog">
+                <div class="list-item">Blog</div>
+            </div>
+            <div class="contact">
+                <div class="list-item">Contact</div>
+            </div>
+            <div class="support">
+                <div class="list-item">Support</div>
+            </div>
+            <div class="developers">
+                <div class="list-item">Developers</div>
+            </div>
+        <div class="bottom-text-list-item"></div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
