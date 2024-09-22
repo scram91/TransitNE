@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TransitNE.Models;
 
 namespace TransitNE.Data;
 
@@ -16,4 +17,6 @@ public class TransitNEContext : IdentityDbContext<TransitNEUser>
         base.OnModelCreating(builder);
 
     }
+
+public DbSet<TransitNE.Models.TrainModel> TrainModel { get; set; } = default!;
 }
