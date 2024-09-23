@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <Content Remove="Enums\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
@@ -20,10 +27,6 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="TransitNETesting" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Enums\" />
 	</ItemGroup>
 
 	<ItemGroup>

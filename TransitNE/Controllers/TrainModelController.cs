@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
+using TransitNE.Data;
 using TransitNE.Models;
 
 namespace TransitNE.Controllers
@@ -15,19 +17,26 @@ namespace TransitNE.Controllers
             _httpClient.BaseAddress = address;
         }
 
+
         [HttpGet]
         public IActionResult Index()
         {
+            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             List<TrainModel> trains = new List<TrainModel>();
             HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                trains = JsonConvert.DeserializeObject<List<TrainModel>>(data);
+                trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
+            }
+            List<string> number = new List<string>();
+            foreach (var item in trains)
+            {
+                number.Add(item.ToString());
             }
 
-            return View();
+            return View(trains);
         }
     }
 }
