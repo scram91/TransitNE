@@ -12,25 +12,18 @@ namespace TransitNETesting;
             _factory = factory;
         }
         
-        [Fact(Skip = "Moved Test to theory")]
-        public async Task TestRouteInformation()
-        {
-            //Arrange
-            var client = _factory.CreateClient();
-            //Act
-            var response = await client.GetAsync("/RouteInformation/Index");
-            int code = (int)response.StatusCode;
-            //Assert
-            Assert.Equal(200, code);
-        }
-
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
-        [InlineData("/RouteInformation/Index")]
+        [InlineData("/Home/Privacy")]
+        [InlineData("/RouteInformation/Septa")]
+        [InlineData("/RouteInformation/NJTransit")]
+        [InlineData("/RouteInformation/Patco")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
-        public async Task AllPagesLoad(string URL)
+        [InlineData("/Identity/Account/Login")]
+        [InlineData("/Identity/Account/Register")]
+    public async Task AllPagesLoad(string URL)
         {
             //Arrange
             var client = _factory.CreateClient();
