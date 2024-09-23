@@ -1,4 +1,5 @@
-﻿@inject SignInManager<TransitNEUser> SignInManager
+﻿@using TransitNE.Data
+@inject SignInManager<TransitNEUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
