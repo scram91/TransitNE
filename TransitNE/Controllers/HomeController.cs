@@ -23,7 +23,7 @@ namespace TransitNE.Controllers
             return View();
         }
 
-        public IActionResult Privacy(string Id)
+        public IActionResult Privacy()
         {
             return View();
         }

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using TransitNE.Models;
 using Microsoft.AspNetCore.Identity;
 using TransitNE.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Data.Common;
+using Microsoft.Data.Sqlite;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,12 +71,26 @@ builder.Services.Configure<PasswordHasherOptions>(option =>
 builder.Services.Configure<SecurityStampValidatorOptions>(o =>
                    o.ValidationInterval = TimeSpan.FromMinutes(1));
 
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
+builder.Services.AddSingleton<DbConnection>(container =>
 {
-    var services = scope.ServiceProvider;
-}
+    var connection = new SqliteConnection("DataSource=:memory:");
+    connection.Open();
+
+    return connection;
+});
+
+builder.Services.AddDbContext<TransitNEContext>((container, options) =>
+{
+    var connection = container.GetRequiredService<DbConnection>();
+    options.UseSqlite(connection);
+});
+
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizePage("/SecurePage");
+});
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -84,6 +98,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 }
 
 app.UseHttpsRedirection();

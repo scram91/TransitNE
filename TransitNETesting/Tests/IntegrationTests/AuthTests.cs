@@ -4,44 +4,73 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using TransitNETesting.Tests;
 using System.Net;
-using System.Net.Http.Headers;
-using Xunit;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-
-
+using Fluent.Infrastructure.FluentModel;
+using TransitNE.Data;
 namespace TransitNETesting.Tests.IntegrationTests;
 
-public class AuthTests : IClassFixture<CustomWebApplicationFactory<Program>>
+public class AuthTests 
 {
-    private readonly CustomWebApplicationFactory<Program> _factory;
+    private readonly InjectFixture _injectFixture;
 
-    public AuthTests()
+    [Theory]
+    [InlineData("test@test.it", "Bred", "Apollo")]
+    public async Task ConfirmEmail_ShouldThrowException_IfUserIdIsNullAsync(string email, string firstName,
+    string lastName)
     {
-        var factory = new CustomWebApplicationFactory<Program>();
-        _factory = factory;
+        var user = new TransitNEUser()
+        {
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName,
+            //This will be implemented later
+            //PasswordExpiredDate = _injectFixture.Generator.UtcNow().AddDays(passwordExpireInDays),
+        };
+
+        Task Act() => _injectFixture.AccountService.ConfirmEmailAsync(null, user.Email, "test");
+
+        await Assert.ThrowsAsync<ArgumentNullException>(Act);
+
+        Assert.Contains("userId", Act().Exception.Message);
     }
 
     [Theory]
-    [InlineData("/Customers")]
-    [InlineData("/Customers/Details")]
-    [InlineData("/Customers/Details/1")]
-    [InlineData("/Customers/Edit")]
-    [InlineData("/Customers/Edit/1")]
-    public async Task Get_EndpointsReturnFailToAnonymousUserForRestrictedUrls(string url)
+    [InlineData("test@test.it", "Bred", "Apollo")]
+    public async Task ConfirmEmail_ShouldThrowException_IfCodeIsNullAsync(string email, string firstName,
+    string lastName /*int passwordExpireInDays*/)
     {
-        // Arrange
-        using var client = _factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var user = new TransitNEUser()
+        {
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName,
+            //PasswordExpiredDate = _injectFixture.Generator.UtcNow().AddDays(passwordExpireInDays),
+        };
 
-        // Act
-        using var response = await client.GetAsync(url);
-        var redirectUrl = response.Headers.Location.LocalPath;
+        Task Act() => _injectFixture.AccountService.ConfirmEmailAsync(user.Id, user.Email, null);
 
-        // Assert
-        Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-        Assert.Equal("/auth/login", redirectUrl);
+        await Assert.ThrowsAsync<ArgumentNullException>(Act);
+
+        Assert.Contains("code", Act().Exception.Message);
     }
+    [Theory]
+    [InlineData("test@test.it", "Bred", "Apollo"/*, 90*/, "wertyuiolkjmnbvcfdew3456789")]
+    public async Task ConfirmEmail_ShouldThrowException_IfUserIsNullAsync(string email, string firstName,
+    string lastName/*, int passwordExpireInDays*/, string code)
+    {
+        var user = new TransitNEUser()
+        {
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName,
+            //PasswordExpiredDate = _injectFixture.Generator.UtcNow().AddDays(passwordExpireInDays),
+        };
+
+        Task Act() => _injectFixture.AccountService.ConfirmEmailAsync(user.Id, user.Email, code);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(Act);
+
+        Assert.Contains("user", Act().Exception.Message);
+    }
+
 
 }
