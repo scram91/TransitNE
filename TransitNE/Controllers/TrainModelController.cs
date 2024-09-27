@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 using TransitNE.Data;
 using TransitNE.Models;
@@ -11,10 +10,13 @@ namespace TransitNE.Controllers
         Uri address = new("https://www3.septa.org/api/TrainView/index.php");
         private readonly HttpClient _httpClient;
 
-        public TrainModelController()
+        private TransitNEContext _context;
+
+        public TrainModelController(TransitNEContext context)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = address;
+            _context = context;
         }
 
 
@@ -31,10 +33,28 @@ namespace TransitNE.Controllers
                 trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
             }
             List<string> number = new List<string>();
+
             foreach (var item in trains)
             {
-                number.Add(item.ToString());
-            }
+                _context.Add(new TrainModel
+                {
+                    ID = item.ID,
+                    lat = item.lat,
+                    lon = item.lon,
+                    trainno = item.trainno,
+                    service = item.service,
+                    dest = item.dest,
+                    currentstop = item.currentstop,
+                    nextstop = item.nextstop,
+                    line = item.line,
+                    consist = item.consist,
+                    heading = item.heading,
+                    late = item.late,
+                    SOURCE = item.SOURCE,
+                    TRACK = item.TRACK,
+                    TRACK_CHANGE = item.TRACK_CHANGE
+                });
+             }
 
             return View(trains);
         }

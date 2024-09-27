@@ -40,7 +40,17 @@
             </div>
             <div class="text-main-frame">
                 <div class="sub-frame">
-                    <div class="rail-schedule">Will contain Regional Rail Schedules</div>
+                    <ul>
+
+                        <% foreach (var m in (IEnumerable
+                        <Train>
+                            )ViewData["schedules"])
+                            { %>
+
+                            <li><%= m.Title %></li>
+
+                            <% } %>
+                    </ul>
                 </div>
             </div>
         </div>

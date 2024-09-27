@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TransitNE.Data;
+namespace TransitNE.Models;
 
 // Add profile data for application users by adding properties to the TransitNEUser class
 public class TransitNEUser : IdentityUser
