@@ -1,26 +1,49 @@
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.AspNetCore.Mvc;
+using TransitNETesting.Tests;
 using TransitNE.Controllers;
+using System.Security.Policy;
+using System;
 
-namespace TransitNETesting.Tests.ControllerTests;
+namespace TransitNETesting.Tests.ControllerTests
 {
-    [TestClass]
-    public class HomeControllerTests
+    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
     {
-        [TestMethod]
-        public void TestHomeIndexView()
+        private readonly HttpClient _httpClient;
+        private readonly CustomWebApplicationFactory<Program> _customWebApplicationFactory;
+
+        public HomeControllerTests()
         {
-            var controller = new HomeController();
-            var result = controller.Index() as ViewResult;
-            Assert.AreEqual("Index", result.ViewName);
+            var factory = new CustomWebApplicationFactory<Program>();
+            _customWebApplicationFactory = factory;
+            _httpClient = factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = false
+            });
+        }
+        [Theory]
+        [InlineData("/Home/Index")]
+        public async Task TestHomeIndexViewAsync(string URL)
+        {
+            //Arrange
+            var client = _customWebApplicationFactory.CreateClient();
+            //Act
+            var response = await client.GetAsync(URL);
+            int code = (int)response.StatusCode;
+            //Assert
+            Assert.Equal(200, code);
         }
 
-        [TestMethod]
-        public void TestHomePrivacyView()
+        [Theory]
+        [InlineData("/Home/Privacy")]
+        public async Task TestHomePrivacyViewAsync(string URL)
         {
-            var controller = new HomeController();
-            var result = controller.Privacy() as ViewResult;
-            Assert.AreEqual("Privacy", result.ViewName);
+            //Arrange
+            var client = _customWebApplicationFactory.CreateClient();
+            //Act
+            var response = await client.GetAsync(URL);
+            int code = (int)response.StatusCode;
+            //Assert
+            Assert.Equal(200, code);
         }
     }
 }

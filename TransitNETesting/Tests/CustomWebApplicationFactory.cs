@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TransitNE.Data;
 
-namespace RazorPagesProject.Tests;
+namespace TransitNETesting.Tests;
 
 // <snippet1>
 public class CustomWebApplicationFactory<TProgram>
