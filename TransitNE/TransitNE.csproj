@@ -35,11 +35,4 @@
 	  <None Include="wwwroot\Images\Philadelphia.jpg" />
 	  <None Include="wwwroot\Images\SEPTA.png" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="wwwroot\Images\NYC.jpg" />
-	  <None Include="wwwroot\Images\Philadelphia.jpg" />
-	  <None Include="wwwroot\Images\SEPTA.png" />
-	</ItemGroup>
-
 </Project>
