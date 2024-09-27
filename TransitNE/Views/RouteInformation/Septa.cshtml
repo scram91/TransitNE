@@ -41,15 +41,10 @@
             <div class="text-main-frame">
                 <div class="sub-frame">
                     <ul>
-
-                        <% foreach (var m in (IEnumerable
-                        <Train>
-                            )ViewData["schedules"])
-                            { %>
-
-                            <li><%= m.Title %></li>
-
-                            <% } %>
+                        @for (int i = 0; i < ViewBag.NumTimes; i++)
+                        {
+                            <li>@ViewBag.Message</li>
+                        }
                     </ul>
                 </div>
             </div>

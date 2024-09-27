@@ -23,7 +23,7 @@ namespace TransitNE.Controllers
         }
 
         [HttpGet]
-        public IActionResult Septa()
+        public IActionResult Septa(int numTimes = 1)
         {
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             List<TrainModel> trains = new List<TrainModel>();
@@ -57,11 +57,12 @@ namespace TransitNE.Controllers
                     TRACK_CHANGE = item.TRACK_CHANGE
                 });
             }
-
-            return View(getTrainSchedule());
+            ViewBag.Message = GetTrainSchedule();
+            ViewBag.NumTimes = numTimes;
+            return View();
         }
 
-        private string? getTrainSchedule()
+        private static string GetTrainSchedule()
         {
             return "Still Implementing";
         }
