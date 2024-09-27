@@ -22,12 +22,6 @@ namespace TransitNE.Controllers
             ViewData["UserID"] = _userManager.GetUserId(this.User);
             return View();
         }
-        public IActionResult Welcome(string name, int ID = 1)
-        {
-            ViewData["Message"] = "Hello " + name;
-            ViewData["ID"] = ID;
-            return View();
-        }
 
         public IActionResult Privacy()
         {

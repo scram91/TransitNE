@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/StyleSheet.css" />
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Welcome">North East Transit</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,11 +23,11 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Welcome">Home</a>
+                                asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="RouteInformation"
-                                asp-action="Index">Route Information</a>
+                                asp-action="Septa">Route Information</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="RouteInformation"
@@ -43,17 +43,76 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="landing-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - North East Transit - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="footer">
+        <div class="title">
+            <div class="arrow-icon"></div>
         </div>
-    </footer>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Use</div>
+                </div>
+            </div>
+            <div class="user-guide">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">User Guide</a>
+            </div>
+            <div class="septa-site">
+                <a class="list-item">Septa Site</a>
+            </div>
+            <div class="nj-transit-site">
+                <a class="list-item">NJ Transit Site</a>
+            </div>
+            <div class="patco-site">
+                <a class="list-item">Patco Site</a>
+            </div>
+            <div class="bottom-text-list-item"></div>
+        </div>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Explore</div>
+                </div>
+            </div>
+            <div class="schedule">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">Schedules</a>
+            </div>
+            <div class="ticketing">
+                <a class="list-item" asp-area="" asp-controller="Ticketing">Ticketing</a>
+            </div>
+            <div class="route-maps">
+                <a class="list-item" asp-area="" asp-controller="RouteMap">Route Maps</a>
+            </div>
+            <div class="trip-planner">
+                <a class="list-item" asp-area="" asp-controller="TripPlanner">Trip Planner</a>
+            </div>
+            <div class="text-list-item"></div>
+        </div>
+        <div class="text-link-list">
+            <div class="list-title">
+                <div class="text-strong">
+                    <div class="sub-text-strong">Resources</div>
+                </div>
+            </div>
+            <div class="blog">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">Blog</a>
+            </div>
+            <div class="contact">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">Contact</a>
+            </div>
+            <div class="support">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">Support</a>
+            </div>
+            <div class="developers">
+                <a class="list-item" asp-area="" asp-controller="RouteInformation">Developers</a>
+            </div>
+        <div class="bottom-text-list-item"></div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

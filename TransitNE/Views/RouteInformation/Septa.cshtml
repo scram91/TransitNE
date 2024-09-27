@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Route Information";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+        <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="hero-image">
+        <div class="text-content-title">
+            <div class="title">Route Information</div>
+            <div class="subtitle">SEPTA Rail/Bus</div>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="image-panel">
+            <img class="septa-text-svg" src="~/Images/SEPTA.png" width="400px" height="400px"/>
+        </div>
+        <div class="nj-button">
+            <div class="state-layer">
+                <div class="label-text">NJ Transit</div>
+            </div>
+        </div>
+        <div class="patco-button">
+            <div class="state-layer">
+                <div class="label-text">PATCO</div>
+            </div>
+        </div>
+        <div class="rail-card-grid-icon">
+            <div class="rail-card-heading">
+                <div class="heading">Septa Regional Rail Information</div>
+                <div class="subheading">Select a different Agency for more information</div>
+            </div>
+            <div class="text-main-frame">
+                <div class="sub-frame">
+                    <div class="rail-schedule">Will contain Regional Rail Schedules</div>
+                </div>
+            </div>
+        </div>
+            <div class="metro-card-grid-icon">
+                <div class="metro-card-heading">
+                    <div class="heading">Septa Metro Information</div>
+                </div>
+                <div class="text-main-frame">
+                    <div class="sub-frame">
+                        <div class="metro-schedule">Will contain Metro Schedules</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bus-card-grid-icon">
+                <div class="bus-card-heading">
+                    <div class="heading">Septa Regional Bus/Trolley Information</div>
+                </div>
+                <div class="text-main-frame">
+                    <div class="sub-frame">
+                        <div class="rail-schedule">Will contain Bus/Trolley Schedules</div>
+                    </div>
+                </div>
+           </div>
+        </div>
+</body>
+</html>
