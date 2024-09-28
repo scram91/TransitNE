@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Drawing.Text;
 using System.Text.Encodings.Web;
@@ -29,16 +30,16 @@ namespace TransitNE.Controllers
             List<TrainModel> trains = new List<TrainModel>();
             HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
 
+
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
             }
-            List<string> number = new List<string>();
 
             foreach (var item in trains)
             {
-                _context.Add(new TrainModel
+                TrainModel model = new TrainModel
                 {
                     ID = item.ID,
                     lat = item.lat,
@@ -55,7 +56,9 @@ namespace TransitNE.Controllers
                     SOURCE = item.SOURCE,
                     TRACK = item.TRACK,
                     TRACK_CHANGE = item.TRACK_CHANGE
-                });
+                };
+                _context.Add(model);
+                _context.SaveChanges();
             }
             ViewBag.Message = GetTrainSchedule();
             ViewBag.NumTimes = numTimes;

@@ -50,6 +50,7 @@ button.accept-policy {
     align-items: flex-start;
     gap: 16px;
     display: inline-flex;
+    margin-top: 10px;
 }
 
     .footer .title {
