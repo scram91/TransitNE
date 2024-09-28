@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Logging;
-using System.Security.Policy;
 
-namespace TransitNETesting
+
+namespace Xunit.Coverlet
 {
     public class PageTests : IClassFixture<WebApplicationFactory<Program>>
     {
@@ -31,7 +28,10 @@ namespace TransitNETesting
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
-        [InlineData("/RouteInformation/Index")]
+        [InlineData("/RouteInformation/Septa")]
+        [InlineData("/RouteInformation/RouteMap")]
+        [InlineData("/RouteInformation/NJTransit")]
+        [InlineData("/RouteInformation/Patco")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         public async Task AllPagesLoad(string URL)
