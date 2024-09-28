@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Route Information";
+﻿@model IEnumerable<TransitNE.Models.RailScheduleModel>
+@{
+    ViewData["Title"] = "SEPTA Route Information";
     Layout = "_Layout";
 }
 
@@ -40,12 +41,43 @@
             </div>
             <div class="text-main-frame">
                 <div class="sub-frame">
-                    <ul>
-                        @for (int i = 0; i < ViewBag.NumTimes; i++)
-                        {
-                            <li>@ViewBag.Message</li>
-                        }
-                    </ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.station)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sched_tm)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.est_tm)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.act_tm)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    @foreach (var item in Model) {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.station)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.sched_tm)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.est_tm)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.act_tm)
+                                </td>
+                            </tr>
+                    }
+                           </tbody>
+                        </table>
                 </div>
             </div>
         </div>

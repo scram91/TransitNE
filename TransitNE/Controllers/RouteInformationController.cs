@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using NuGet.Configuration;
+using System.Collections.Immutable;
 using System.Drawing.Text;
 using System.Text.Encodings.Web;
 using TransitNE.Data;
@@ -11,10 +17,8 @@ namespace TransitNE.Controllers
     public class RouteInformationController : Controller
     {
         private readonly TransitNEContext _context;
-
-        Uri address = new("https://www3.septa.org/api/TrainView/index.php");
+        Uri address = new("https://www3.septa.org/api/");
         private readonly HttpClient _httpClient;
-
 
         public RouteInformationController(TransitNEContext context)
         {
@@ -24,11 +28,11 @@ namespace TransitNE.Controllers
         }
 
         [HttpGet]
-        public IActionResult Septa(int numTimes = 1)
+        public IActionResult Septa()
         {
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             List<TrainModel> trains = new List<TrainModel>();
-            HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress).Result;
+            HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "TrainView/index.php").Result;
 
 
             if (response.IsSuccessStatusCode)
@@ -57,29 +61,67 @@ namespace TransitNE.Controllers
                     TRACK = item.TRACK,
                     TRACK_CHANGE = item.TRACK_CHANGE
                 };
-                _context.Add(model);
+                if (_context.TrainModel.IsNullOrEmpty())
+                {
+                    _context.Add(model);
+                }
+                else
+                {
+                    _context.Update(model);
+                }
                 _context.SaveChanges();
             }
-            ViewBag.Message = GetTrainSchedule();
-            ViewBag.NumTimes = numTimes;
-            return View();
+            List<string> trainNo = GetTrainNumbers();
+            List<RailScheduleModel> railSchedules = GetRailSchedules(trainNo);
+
+
+            return View(railSchedules);
         }
 
-        private static string GetTrainSchedule()
+        private List<RailScheduleModel> GetRailSchedules(List<string> trainNo)
         {
-            return "Still Implementing";
+            _context.RailScheduleModels.RemoveRange();
+            List<RailScheduleModel> schedules = new List<RailScheduleModel>();
+            for (int i = 0; i < trainNo.Count; i++)
+            {
+                _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage scheduleResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "RRSchedules/index.php?req1=" + trainNo[i]).Result;
+
+                if (scheduleResponse.IsSuccessStatusCode)
+                {
+                    string data = scheduleResponse.Content.ReadAsStringAsync().Result;
+                    schedules = JsonConvert.DeserializeObject<List<RailScheduleModel>>(data)!;
+                }
+                foreach (var item in schedules)
+                {
+                    RailScheduleModel railSchedule = new RailScheduleModel
+                    {
+                        ID = item.ID,
+                        station = item.station,
+                        sched_tm = item.sched_tm,
+                        est_tm = item.est_tm,
+                        act_tm = item.est_tm,
+                    };
+                    _context.Add(railSchedule);
+                    _context.SaveChanges();
+                }
+            }
+            return schedules;
         }
 
-        public IActionResult NJTransit()
+        public List<string> GetTrainNumbers()
         {
-            return View();
-        }
+            var result = _context.TrainModel.ToList();
 
-        public IActionResult Patco()
-        {
-            return View();
-        }
+            List<string> trainNo = [];
 
+            foreach (var item in result)
+            {
+                trainNo.Add(item.trainno);
+            }
+
+            return trainNo;
+        }
         public IActionResult RouteMap()
         {
             return View();
