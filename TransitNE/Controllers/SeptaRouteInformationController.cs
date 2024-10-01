@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -8,29 +9,35 @@ using Newtonsoft.Json;
 using NuGet.Configuration;
 using System.Collections.Immutable;
 using System.Drawing.Text;
+using System.Linq;
 using System.Text.Encodings.Web;
 using TransitNE.Data;
 using TransitNE.Models;
 
 namespace TransitNE.Controllers
 {
-    public class RouteInformationController : Controller
+    public class SeptaRouteInformationController : Controller
     {
         private readonly TransitNEContext _context;
         Uri address = new("https://www3.septa.org/api/");
         private readonly HttpClient _httpClient;
 
-        public RouteInformationController(TransitNEContext context)
+        public SeptaRouteInformationController(TransitNEContext context)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = address;
             _context = context;
         }
 
-        [HttpGet]
         public IActionResult Septa()
         {
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            return View();
+        }
+
+        [HttpGet]
+        public void SetTrainModels()
+            {
+             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             List<TrainModel> trains = new List<TrainModel>();
             HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "TrainView/index.php").Result;
 
@@ -38,7 +45,7 @@ namespace TransitNE.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
+        trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
             }
 
             foreach (var item in trains)
@@ -70,15 +77,10 @@ namespace TransitNE.Controllers
                     _context.Update(model);
                 }
                 _context.SaveChanges();
-            }
-            List<string> trainNo = GetTrainNumbers();
-            List<RailScheduleModel> railSchedules = GetRailSchedules(trainNo);
-
-
-            return View(railSchedules);
-        }
-
-        private List<RailScheduleModel> GetRailSchedules(List<string> trainNo)
+             }
+         }
+        [HttpGet]
+        private List<RailScheduleModel> GetSeptaRailSchedules(List<string> trainNo)
         {
             _context.RailScheduleModels.RemoveRange();
             List<RailScheduleModel> schedules = new List<RailScheduleModel>();
@@ -109,22 +111,29 @@ namespace TransitNE.Controllers
             return schedules;
         }
 
-        public List<string> GetTrainNumbers()
+        public List<string> GetSeptaTrainNumbers(string selectedLine)
         {
+            var lines = _context.TrainModel.Where(s => s.line.Contains(selectedLine));
             var result = _context.TrainModel.ToList();
 
             List<string> trainNo = [];
 
-            foreach (var item in result)
+            foreach (var item in lines)
             {
                 trainNo.Add(item.trainno);
             }
 
             return trainNo;
         }
-        public IActionResult RouteMap()
+
+        [HttpPost]
+        public IActionResult GetSelectedLine()
         {
-            return View();
+            string selectedLine = Request.Form["RegionalRailLine"].ToString();
+            SetTrainModels();
+            List<string> trainNo = GetSeptaTrainNumbers(selectedLine);
+            List<RailScheduleModel> railSchedules = GetSeptaRailSchedules(trainNo);
+            return View(railSchedules);
         }
     }
 }
