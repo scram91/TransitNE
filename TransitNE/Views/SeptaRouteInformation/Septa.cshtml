@@ -1,4 +1,4 @@
-﻿@model TransitNE.Models.SeptaRailLines
+﻿@model TransitNE.Models.BusTrolleyRouteModel
 @{
     ViewData["Title"] = "SEPTA Route Information";
     Layout = "_Layout";
@@ -69,20 +69,36 @@
         <div class="metro-card-grid-icon">
                 <div class="metro-card-heading">
                     <div class="heading">Septa Metro Information</div>
-                </div>
+                <p> Select a line to see its current schedule</p>
+                @using(Html.BeginForm("GetSelectedMetro", "SeptaRouteInformation", FormMethod.Post, new { enctype = "multipart/form-data"}))
+                {
+                    @Html.DropDownList("MetroLine", new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text = "Default", Value = "Default" }
+                        }, "Select Line")
+                    <input type="submit" value="submit" />
+                    }
+            </div>
                 <div class="text-main-frame">
                     <div class="sub-frame">
-                        <div class="metro-schedule">Will contain Metro Schedules</div>
                     </div>
                 </div>
         </div>
         <div class="bus-card-grid-icon">
                 <div class="bus-card-heading">
                     <div class="heading">Septa Regional Bus/Trolley Information</div>
-                </div>
+                    <p> Select a line to see its current schedule</p>
+                    @using(Html.BeginForm("GetSelectedBus", "SeptaRouteInformation", FormMethod.Post, new {enctype = "multipart/"}))
+                {
+                    @Html.DropDownList("BusLine", new List<SelectListItem>
+                    {
+                        new SelectListItem{ Text="Placeholder", Value="Placeholder" }
+                    }, "Select Line")
+                    <input type="submit" value="submit" />
+                    }
+            </div>
                 <div class="text-main-frame">
                     <div class="sub-frame">
-                        <div class="rail-schedule">Will contain Bus/Trolley Schedules</div>
                     </div>
                 </div>
         </div>

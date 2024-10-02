@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransitNE", "TransitNE\Tran
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransitNETesting", "TransitNETesting\TransitNETesting.csproj", "{11A49352-7257-4EC0-BCCD-30873BA48D76}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TransitNEDatabase", "TransitNEDatabase\TransitNEDatabase.sqlproj", "{773CF1C3-F2E4-4579-B715-0163B98CEB0F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +21,6 @@ Global
 		{11A49352-7257-4EC0-BCCD-30873BA48D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A49352-7257-4EC0-BCCD-30873BA48D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A49352-7257-4EC0-BCCD-30873BA48D76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{773CF1C3-F2E4-4579-B715-0163B98CEB0F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

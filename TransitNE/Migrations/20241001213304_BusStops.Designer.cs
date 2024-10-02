@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransitNE.Data;
 
@@ -11,9 +12,11 @@ using TransitNE.Data;
 namespace TransitNE.Migrations
 {
     [DbContext(typeof(TransitNEContext))]
-    partial class TransitNEContextModelSnapshot : ModelSnapshot
+    [Migration("20241001213304_BusStops")]
+    partial class BusStops
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,31 +315,6 @@ namespace TransitNE.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("SeptaRailLinesModels");
-                });
-
-            modelBuilder.Entity("TransitNE.Models.StopModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Lat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lng")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StopId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StopName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StopModels");
                 });
 
             modelBuilder.Entity("TransitNE.Models.TrainModel", b =>

@@ -28,4 +28,7 @@ public class TransitNEContext : IdentityDbContext<TransitNEUser>
     public DbSet<TransitNE.Models.BusTrolleySchedule> BusTrolleySchedules { get; private set; } = default!;
 
     public DbSet<TransitNE.Models.SeptaRailLines> SeptaRailLinesModels { get; internal set; } = default!;
+
+    public DbSet<TransitNE.Models.BusTrolleyRouteModel> BusTrolleyRouteModels { get; protected set; } = default!;
+    public DbSet<TransitNE.Models.StopModel> StopModels { get; set; }
 }

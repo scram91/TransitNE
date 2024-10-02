@@ -31,6 +31,8 @@ namespace TransitNE.Controllers
 
         public IActionResult Septa()
         {
+            GetBusTrolleyInformation();
+
             return View();
         }
 
@@ -135,5 +137,11 @@ namespace TransitNE.Controllers
             List<RailScheduleModel> railSchedules = GetSeptaRailSchedules(trainNo);
             return View(railSchedules);
         }
+
+        private void GetBusTrolleyInformation()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
