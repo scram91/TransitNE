@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransitNE.Data;
 
@@ -11,9 +12,11 @@ using TransitNE.Data;
 namespace TransitNE.Migrations
 {
     [DbContext(typeof(TransitNEContext))]
-    partial class TransitNEContextModelSnapshot : ModelSnapshot
+    [Migration("20241004180238_inputmodel")]
+    partial class inputmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,25 +160,6 @@ namespace TransitNE.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("TransitNE.Models.BusInputModel", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Busline")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StopName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("BusInputModels");
                 });
 
             modelBuilder.Entity("TransitNE.Models.BusTrolleyModel", b =>

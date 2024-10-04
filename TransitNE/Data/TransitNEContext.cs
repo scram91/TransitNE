@@ -31,4 +31,5 @@ public class TransitNEContext : IdentityDbContext<TransitNEUser>
 
     public DbSet<TransitNE.Models.BusTrolleyRouteModel> BusTrolleyRouteModels { get; protected set; } = default!;
     public DbSet<TransitNE.Models.StopModel> StopModels { get; set; }
+    public DbSet<TransitNE.Models.BusInputModel> BusInputModels { get; protected set;} = default!;
 }

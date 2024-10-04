@@ -1,4 +1,4 @@
-﻿@model TransitNE.Models.BusTrolleyRouteModel
+﻿@model TransitNE.Models.BusInputModel
 @{
     ViewData["Title"] = "SEPTA Route Information";
     Layout = "_Layout";
@@ -88,14 +88,12 @@
                 <div class="bus-card-heading">
                     <div class="heading">Septa Regional Bus/Trolley Information</div>
                     <p> Select a line to see its current schedule</p>
-                    @using(Html.BeginForm("GetSelectedBus", "SeptaRouteInformation", FormMethod.Post, new {enctype = "multipart/"}))
+                @using(Html.BeginForm("GetSelectedBus", "SeptaRouteInformation", FormMethod.Post))
                 {
-                    @Html.DropDownList("BusLine", new List<SelectListItem>
-                    {
-                        new SelectListItem{ Text="Placeholder", Value="Placeholder" }
-                    }, "Select Line")
+                    <input type="text" name="LineNumber" id="busline" />
+                    <input type="text" name="StopName" id="stopname" />
                     <input type="submit" value="submit" />
-                    }
+                }
             </div>
                 <div class="text-main-frame">
                     <div class="sub-frame">

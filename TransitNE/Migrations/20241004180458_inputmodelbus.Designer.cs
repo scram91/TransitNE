@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransitNE.Data;
 
@@ -11,9 +12,11 @@ using TransitNE.Data;
 namespace TransitNE.Migrations
 {
     [DbContext(typeof(TransitNEContext))]
-    partial class TransitNEContextModelSnapshot : ModelSnapshot
+    [Migration("20241004180458_inputmodelbus")]
+    partial class inputmodelbus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
