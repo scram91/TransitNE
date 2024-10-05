@@ -12,26 +12,14 @@ namespace Xunit.Coverlet
             var factory = new WebApplicationFactory<Program>();
             _factory = factory;
         }
-        
-        [Fact(Skip = "Moved Test to theory")]
-        public async Task TestRouteInformation()
-        {
-            //Arrange
-            var client = _factory.CreateClient();
-            //Act
-            var response = await client.GetAsync("/RouteInformation/Index");
-            int code = (int)response.StatusCode;
-            //Assert
-            Assert.Equal(200, code);
-        }
 
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
         [InlineData("/RouteInformation/Septa")]
-        [InlineData("/RouteInformation/RouteMap")]
         [InlineData("/RouteInformation/NJTransit")]
         [InlineData("/RouteInformation/Patco")]
+        [InlineData("/RouteInformation/RouteInformation")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         public async Task AllPagesLoad(string URL)
