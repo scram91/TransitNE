@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
 
-namespace Xunit.Coverlet
+namespace TransitNETesting
 {
     public class PageTests : IClassFixture<WebApplicationFactory<Program>>
     {
@@ -16,10 +16,10 @@ namespace Xunit.Coverlet
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
-        [InlineData("/RouteInformation/Septa")]
-        [InlineData("/RouteInformation/NJTransit")]
-        [InlineData("/RouteInformation/Patco")]
-        [InlineData("/RouteInformation/RouteInformation")]
+        [InlineData("/SeptaRouteInformation/Septa")]
+        [InlineData("/NJTransitRouteInformation/NJTransit")]
+        [InlineData("/PatcoRouteInformation/Patco")]
+        [InlineData("/RouteMap/RouteMap")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         public async Task AllPagesLoad(string URL)

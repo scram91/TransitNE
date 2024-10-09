@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TransitNE.Data;
+using TransitNE.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Data.Common;
 using Microsoft.Data.Sqlite;

@@ -35,7 +35,7 @@ namespace TransitNE.Controllers
 
         public IActionResult Septa()
         {
-            GetBusTrolleyInformation();
+          //  GetBusTrolleyInformation();
 
             return View();
         }
@@ -43,6 +43,8 @@ namespace TransitNE.Controllers
         [HttpGet]
         public void SetTrainModels()
             {
+
+          //  _context.TrainModel.RemoveRange();
              _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             List<TrainModel> trains = new List<TrainModel>();
             HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "TrainView/index.php").Result;
@@ -51,7 +53,7 @@ namespace TransitNE.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-        trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
+                trains = JsonConvert.DeserializeObject<List<TrainModel>>(data)!;
             }
 
             foreach (var item in trains)
@@ -74,15 +76,8 @@ namespace TransitNE.Controllers
                     TRACK = item.TRACK,
                     TRACK_CHANGE = item.TRACK_CHANGE
                 };
-                if (_context.TrainModel.IsNullOrEmpty())
-                {
-                    _context.Add(model);
-                }
-                else
-                {
-                    _context.Update(model);
-                }
-                _context.SaveChanges();
+                _context.Add(model);
+              //  _context.SaveChanges();
              }
          }
         [HttpGet]
@@ -149,46 +144,47 @@ namespace TransitNE.Controllers
             
         }
         [HttpGet]
-        private List<StopModel> GetStopInformation(string lineNumber)
+        private List<StopModel> GetStopInformation(string routeNumber)
         {
             _context.StopModels.RemoveRange();
-            List<StopModel> stops = new List<StopModel>();
+            //List<StopModel> stops = new List<StopModel>();
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage stopResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "Stops/index.php?req1=" + lineNumber).Result;
+            HttpResponseMessage stopResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "Stops/index.php?req1=" + routeNumber).Result;
 
-            if (stopResponse.IsSuccessStatusCode)
-            {
+            //if (stopResponse.IsSuccessStatusCode)
+            //{
                 string stopData = stopResponse.Content.ReadAsStringAsync().Result;
-                stops = JsonConvert.DeserializeObject<List<StopModel>>(stopData);
-            }
-            foreach (var item in stops)
-            {
-                StopModel stopModel = new StopModel
+                var stops = JsonConvert.DeserializeObject<List<StopModel>>(stopData);
+           // }
+
+                foreach (var item in stops)
                 {
-                    Id = item.Id,
-                    Lng = item.Lng,
-                    Lat = item.Lat,
-                    StopId = item.StopId,
-                    StopName = item.StopName
-                };
-                _context.Add(stopModel);
-                _context.SaveChanges();
-            }
-            return stops;
+                    StopModel stopModel = new StopModel
+                    {
+                        Id = item.Id,
+                        Lng = item.Lng,
+                        Lat = item.Lat,
+                        StopId = item.StopId,
+                        StopName = item.StopName
+                    };
+                    _context.Add(stopModel);
+                    //_context.SaveChanges();
+                }
+                return stops;            
         }
         [HttpGet]
-        private List<BusTrolleySchedule> GetBusTrolleySchedule(string stopId)
+        private List<BusTrolleySchedule> GetBusTrolleySchedule(int stopId)
         {
             _context.BusTrolleySchedules.RemoveRange();
-            List<BusTrolleySchedule> busTrolleySchedules = new List<BusTrolleySchedule>();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage busResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "BusSchedules/index.php?stop_id=" + 23).Result;
+            //List<BusTrolleySchedule> busTrolleySchedules = new List<BusTrolleySchedule>();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+            HttpResponseMessage busResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "BusSchedules/index.php?stop_id=" + stopId).Result;
 
-            if (busResponse.IsSuccessStatusCode)
-            {
+           // if (busResponse.IsSuccessStatusCode)
+            //{
                 string busData = busResponse.Content.ReadAsStringAsync().Result;
-                busTrolleySchedules = JsonConvert.DeserializeObject<List<BusTrolleySchedule>>(busData);
-            }
+                var busTrolleySchedules = JsonConvert.DeserializeObject<List<BusTrolleySchedule>>(busData);
+            //}
 
             foreach (var item in busTrolleySchedules)
             {
@@ -209,14 +205,32 @@ namespace TransitNE.Controllers
             return busTrolleySchedules;
         }
 
-        [HttpPost]
-        public IActionResult GetSelectedBus(string LineNumber, string StopName)
+        private int GetBusLine(string stopName)
         {
-            //This is used in data validation
-           GetStopInformation(LineNumber);
+            var busline = _context.StopModels
+                                    .Where(m => m.StopName == stopName)
+                                    .Select(m => m.StopId).FirstOrDefault();
 
+            string lineNumber = busline.ToString();
+            int line = 0;
+            line = Int32.Parse(lineNumber);
 
-            return View(GetBusTrolleySchedule(StopName));
+            return line;
+                       
+        }
+
+        [HttpPost]
+        public IActionResult GetSelectedBus(string route, string StopName)
+        {
+            GetStopInformation(route);
+            int LineNumber;
+           //This is used in data validation
+           LineNumber = GetBusLine(StopName);
+
+            List<BusTrolleySchedule> busTrolleys = new List<BusTrolleySchedule>();
+            busTrolleys = GetBusTrolleySchedule(LineNumber);
+
+            return View(busTrolleys);
         }
 
     }
