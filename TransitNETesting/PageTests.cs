@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Logging;
-using System.Security.Policy;
+
 
 namespace TransitNETesting
 {
@@ -19,10 +16,10 @@ namespace TransitNETesting
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
-        [InlineData("/RouteInformation/Septa")]
-        [InlineData("/RouteInformation/NJTransit")]
-        [InlineData("/RouteInformation/Patco")]
-        [InlineData("/RouteInformation/RouteInformation")]
+        [InlineData("/SeptaRouteInformation/Septa")]
+        [InlineData("/NJTransitRouteInformation/NJTransit")]
+        [InlineData("/PatcoRouteInformation/Patco")]
+        [InlineData("/RouteMap/RouteMap")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         public async Task AllPagesLoad(string URL)

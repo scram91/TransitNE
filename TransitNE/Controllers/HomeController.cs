@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TransitNE.Data;
 using TransitNE.Models;
 
 namespace TransitNE.Controllers
