@@ -176,15 +176,15 @@ namespace TransitNE.Controllers
         private List<BusTrolleySchedule> GetBusTrolleySchedule(int stopId)
         {
             _context.BusTrolleySchedules.RemoveRange();
-            //List<BusTrolleySchedule> busTrolleySchedules = new List<BusTrolleySchedule>();
+            List<BusTrolleySchedule> busTrolleySchedules = new List<BusTrolleySchedule>();
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             HttpResponseMessage busResponse = _httpClient.GetAsync(_httpClient.BaseAddress + "BusSchedules/index.php?stop_id=" + stopId).Result;
 
-           // if (busResponse.IsSuccessStatusCode)
-            //{
+            //if (busResponse.IsSuccessStatusCode)
+           // {
                 string busData = busResponse.Content.ReadAsStringAsync().Result;
-                var busTrolleySchedules = JsonConvert.DeserializeObject<List<BusTrolleySchedule>>(busData);
-            //}
+                busTrolleySchedules = JsonConvert.DeserializeObject<List<BusTrolleySchedule>>(busData);
+          //  }
 
             foreach (var item in busTrolleySchedules)
             {
