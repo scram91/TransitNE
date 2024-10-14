@@ -33,4 +33,8 @@ public class TransitNEContext : IdentityDbContext
     public DbSet<TransitNE.Models.BusTrolleyRouteModel> BusTrolleyRouteModels { get; protected set; } = default!;
     public DbSet<TransitNE.Models.StopModel> StopModels { get; set; }
     public DbSet<TransitNE.Models.BusInputModel> BusInputModels { get; protected set;} = default!;
+    public DbSet<TransitNE.Models.NJTransit.StationModel> StationModels { get; protected set; } = default!;
+    public DbSet<TransitNE.Models.NJTransit.StationMsg> StationMsgs { get; protected set; } = default!;
+    public DbSet<TransitNE.Models.NJTransit.StationSchedules> StationSchedules { get; protected set; } = default!;
+    public DbSet<TransitNE.Models.NJTransit.TrainSchedule> TrainSchedules { get; internal set; } = default!;
 }

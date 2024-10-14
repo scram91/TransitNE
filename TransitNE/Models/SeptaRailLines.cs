@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-
-namespace TransitNE.Models
+﻿namespace TransitNE.Models
 {
     public class SeptaRailLines
     {
