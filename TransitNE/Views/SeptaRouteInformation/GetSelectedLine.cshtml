@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TransitNE.Models.RailScheduleModel>
+
+@{
+    ViewData["Title"] = "GetSelectedLine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SeptaRailSchedule</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.station)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.sched_tm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.est_tm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.act_tm)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.station)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sched_tm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.est_tm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.act_tm)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

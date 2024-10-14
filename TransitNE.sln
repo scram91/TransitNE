@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransitNE", "TransitNE\TransitNE.csproj", "{D2683403-E34C-4196-A111-3D9933511A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransitNETesting", "TransitNETesting\TransitNETesting.csproj", "{11A49352-7257-4EC0-BCCD-30873BA48D76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransitNETesting", "TransitNETesting\TransitNETesting.csproj", "{11A49352-7257-4EC0-BCCD-30873BA48D76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

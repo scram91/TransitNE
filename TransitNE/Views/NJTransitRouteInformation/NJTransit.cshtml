@@ -1,0 +1,75 @@
+﻿@model TransitNE.Models.BusInputModel
+@{
+    ViewData["Title"] = "SEPTA Route Information";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="hero-image">
+        <div class="text-content-title">
+            <div class="title">Septa Route Information</div>
+            <div class="subtitle">Select a different Agency for more information</div>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="image-panel">
+            <img class="septa-text-svg" src="~/Images/SEPTA.png" width="400px" height="400px" />
+        </div>
+        <div class="nj-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("NJTransit", "NJTransitRouteInformation")'">NJ Transit</button>
+            </div>
+        </div>
+        <div class="patco-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("Patco", "PatcoRouteInformation")'">PATCO</button>
+            </div>
+        </div>
+        <div class="rail-card-grid-icon">
+            <div class="rail-card-heading">
+                <div class="heading">Septa Regional Rail Information</div>
+                <div class="subheading">
+                    <p>Select a line to see its current schedule</p>
+                    @using (Html.BeginForm("GetSelectedLine", "SeptaRouteInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.DropDownList("RegionalRailLine", new List<SelectListItem>
+                    {
+                    new SelectListItem{ Text="PlaceHolder", Value = "PlaceHolder" },
+                    }, "Select Line")
+                        <input type="submit" value="Submit" />
+                    }
+                </div>
+            </div>
+            <div class="text-main-frame">
+                <div class="sub-frame">
+                </div>
+            </div>
+        </div>
+        <div class="bus-card-grid-icon">
+            <div class="bus-card-heading">
+                <div class="heading">NJ Transit Bus Information</div>
+                <p> Select a line to see its current schedule</p>
+                @using (Html.BeginForm("GetSelectedBus", "SeptaRouteInformation", FormMethod.Post))
+                {
+                    <input type="text" name="LineNumber" id="busline" />
+                    <input type="text" name="StopName" id="stopname" />
+                    <input type="submit" value="submit" />
+                }
+            </div>
+            <div class="text-main-frame">
+                <div class="sub-frame">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

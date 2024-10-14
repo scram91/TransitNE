@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace TransitNETesting;
 
+namespace TransitNETesting
+{
     public class PageTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
@@ -12,13 +13,22 @@ namespace TransitNETesting;
             _factory = factory;
         }
         
+        [Fact(Skip = "Moved Test to theory")]
+        public async Task TestRouteInformation()
+        {
+            //Arrange
+            var client = _factory.CreateClient();
+            //Act
+            var response = await client.GetAsync("/RouteInformation/Index");
+            int code = (int)response.StatusCode;
+            //Assert
+            Assert.Equal(200, code);
+        }
+
         [Theory]
         [InlineData("/")]
         [InlineData("/Home/Index")]
-        [InlineData("/Home/Privacy")]
-        [InlineData("/RouteInformation/Septa")]
-        [InlineData("/RouteInformation/NJTransit")]
-        [InlineData("/RouteInformation/Patco")]
+        [InlineData("/RouteInformation/Index")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         [InlineData("/Identity/Account/Login")]

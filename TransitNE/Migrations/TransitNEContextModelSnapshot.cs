@@ -159,7 +159,261 @@ namespace TransitNE.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TransitNE.Data.TransitNEUser", b =>
+            modelBuilder.Entity("TransitNE.Models.BusInputModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Busline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StopName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BusInputModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.BusTrolleyModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("BlockID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Destination")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estimated_seat_availability")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Heading")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Label")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Late")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Lon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Next_stop_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Next_stop_sequence")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Offeset_sec")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Original_late")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Trip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BusTrolleyModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.BusTrolleyRouteModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("RouteName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RouteNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BusTrolleyRouteModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.BusTrolleySchedule", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("DateCalendar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DirectionDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Route")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stopname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("day")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BusTrolleySchedules");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.RailScheduleModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("act_tm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("est_tm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("sched_tm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("station")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RailScheduleModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.SeptaRailLines", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("RailLine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("SeptaRailLinesModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.StopModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Lat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lng")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StopId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StopName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StopModels");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.TrainModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("SOURCE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TRACK")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TRACK_CHANGE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("consist")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("currentstop")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("dest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("heading")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("late")
+                        .HasColumnType("int");
+
+                    b.Property<string>("line")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("lon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nextstop")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("service")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("trainno")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TrainModel");
+                });
+
+            modelBuilder.Entity("TransitNE.Models.TransitNEUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -179,12 +433,10 @@ namespace TransitNE.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -243,7 +495,7 @@ namespace TransitNE.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TransitNE.Data.TransitNEUser", null)
+                    b.HasOne("TransitNE.Models.TransitNEUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -252,7 +504,7 @@ namespace TransitNE.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TransitNE.Data.TransitNEUser", null)
+                    b.HasOne("TransitNE.Models.TransitNEUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -267,7 +519,7 @@ namespace TransitNE.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TransitNE.Data.TransitNEUser", null)
+                    b.HasOne("TransitNE.Models.TransitNEUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -276,7 +528,7 @@ namespace TransitNE.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TransitNE.Data.TransitNEUser", null)
+                    b.HasOne("TransitNE.Models.TransitNEUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
