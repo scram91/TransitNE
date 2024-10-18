@@ -1,10 +1,65 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model TransitNE.Models.BusInputModel
 @{
-    ViewData["Title"] = "Route Information";
+    ViewData["Title"] = "PATCO Route Information";
+    Layout = "_Layout";
 }
 
-<h2>Route Information</h2>
-
-<p>Template will contain route information</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="hero-image">
+        <div class="text-content-title">
+            <div class="title">PATCO Route Information</div>
+            <div class="subtitle">Select a different Agency for more information</div>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="image-panel">
+            <img class="patco-text-svg" src="~/Images/PATCO_Line.png" width="400px" height="400px"/>
+        </div>
+        <div class="nj-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("NJTransit", "NJTransitRouteInformation")'">NJ Transit</button>
+            </div>
+        </div>
+        <div class="septa-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("Septa", "SeptaRouteInformation")'">SEPTA</button> 
+            </div>
+        </div>
+        <div class="rail-card-grid-icon">
+            <div class="rail-card-heading">
+                <div class="heading">PATCO Rail Information</div>
+                <div class="subheading">
+                    <p>PATCO Rail schedule can be downloaded below.</p>
+                </div>
+                <a href="~/documents/PATCO_Timetable.pdf" target="_blank">Download Schedule</a>
+            </div>
+            <div class="text-main-frame">
+                <div class="sub-frame">
+                </div>
+            </div>
+        </div>
+        <div class="travel-alert-grid-icon">
+                <div class="travel-alert-heading">
+                    <div class="heading">Travel Alerts</div>
+                    <div class="subheading">
+                        <p> PATCO Travel Alerts can be found on the PATCO Website.</p>
+                        </div>
+                    <a href="http://www.ridepatco.org/schedules/alerts.asp">Travel Alerts</a>
+                </div>
+                <div class="text-main-frame">
+                    <div class="sub-frame">
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
