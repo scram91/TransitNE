@@ -35,7 +35,10 @@ jobs:
   tests:
     needs: build
     name: Unit Testing
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    services:
+      selenium:
+        image: selenium/standalone-chrome
         
     steps:
       - name: Checkout Code
@@ -45,7 +48,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-          
+      
       - name: Update Database
         run: |
           dotnet tool install --global dotnet-ef
@@ -53,7 +56,7 @@ jobs:
           dotnet ef database update -c TransitNEContext -p TransitNE
         env:
           ASPNETCORE_ENVIRONMENT: Development
-        
+          
       - name: Unit Tests
         run: dotnet test --configuration Release
         env:
