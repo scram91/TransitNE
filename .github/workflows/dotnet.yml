@@ -1,10 +1,6 @@
 name: .NET
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [push]
 
 jobs:
   build:
@@ -12,6 +8,9 @@ jobs:
     permissions: 
       contents: write
       pull-requests: write
+    strategy:
+	matrix:
+	  dotnet-version: [ '8.0.x' ]
     
     env:
       Project_Solution: TransitNE.sln
@@ -22,10 +21,11 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-        dotnet-quality: 'preview'
-        cache: true
-    - name: Restore dependencies
+        dotnet-version: ${{ matrix.dotnet-version }}
+	cache: true
+    - name: Display dotnet version
+      run: dotnet --version
+    - name: Install Dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Debug
+      run: dotnet build
