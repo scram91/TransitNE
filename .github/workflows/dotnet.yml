@@ -50,7 +50,7 @@ jobs:
         run: |
           dotnet tool install --global dotnet-ef
           dotnet tool restore
-          dotnet ef database update -c TransitNEContext -p TransitNETesting
+          dotnet ef database update -c TransitNEContext -p TransitNE
         env:
           ASPNETCORE_ENVIRONMENT: Development
         
