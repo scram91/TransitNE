@@ -11,8 +11,8 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    name: TransitNE
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -24,3 +24,17 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+  tests:
+    needs: build
+    name: Unit Testing
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Unit Tests
+      - run: dotnet test TransitNE.TransitNETesting.Tests --no-restore --verbosity normal
