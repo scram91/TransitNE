@@ -52,6 +52,14 @@ jobs:
           dotnet-version: 8.0.x
       - name: Start Selenoid Server
         uses: BorisOsipov/selenoid-github-action@1
+
+      - name: Update Database
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet tool restore
+          dotnet ef database update -c TransitNEContext
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
         
       - name: Unit Tests
         run: dotnet test --configuration Release
