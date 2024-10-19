@@ -20,9 +20,23 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 'stable'
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ${{ env.Test_Project_Path }}
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ${{ env.TestProject_Path }} --configuration Debug --results-directory .
+    - name: Upload Results
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: '*.txt'
+        if-no-files-found: warn
+
+
+      
