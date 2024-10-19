@@ -37,4 +37,4 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Unit Tests
-      - run: dotnet test TransitNE.TransitNETesting.Tests --no-restore --verbosity normal
+        run: dotnet test TransitNE.TransitNETesting.Tests --no-restore --verbosity normal
