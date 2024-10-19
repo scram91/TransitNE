@@ -36,6 +36,12 @@ jobs:
     needs: build
     name: Unit Testing
     runs-on: ${{ matrix.os }}
+
+    
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
