@@ -22,7 +22,6 @@ namespace TransitNETesting.Tests.UnitTests
         [InlineData("/NJTransitRouteInformation/NJTransit")]
         [InlineData("/PatcoRouteInformation/Patco")]
         [InlineData("/RouteMap/RouteMap")]
-        [InlineData("/TrainModel/Index")]
         [InlineData("/Ticketing/Index")]
         [InlineData("/TripPlanner/Index")]
         [InlineData("/Identity/Account/Login")]

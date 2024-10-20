@@ -26,5 +26,12 @@ namespace TransitNETesting.Tests.SystemTests
             var registerForm = _driver.FindElement(By.Id("registerForm"));
             Assert.NotNull(registerForm);
         }
+        [Fact]
+        public void CheckSubmitButton()
+        {
+            _driver.FindElement(By.Id("register")).Click();
+            var submitButton = _driver.FindElement(By.Id("registerSubmit"));
+            Assert.NotNull(submitButton);
+        }
     }
 }
