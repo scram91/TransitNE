@@ -21,11 +21,11 @@
     </div>
     <div class="frame">
         <div class="image-panel">
-            <img class="septa-text-svg" src="~/Images/SEPTA.png" width="400px" height="400px" />
+            <img class="septa-text-svg" src="~/Images/NJTransit.jpeg" width="400px" height="400px" />
         </div>
         <div class="nj-button">
             <div class="state-layer">
-                <button type="button" onclick="location.href='@Url.Action("Septa", "SeptaRouteInformation")'">NJ Transit</button>
+                <button type="button" onclick="location.href='@Url.Action("Septa", "SeptaRouteInformation")'">SEPTA</button>
             </div>
         </div>
         <div class="patco-button">
@@ -35,7 +35,7 @@
         </div>
         <div class="rail-card-grid-icon">
             <div class="rail-card-heading">
-                <div class="heading">Septa Regional Rail Information</div>
+                <div class="heading"> NJ Transit Rail Information</div>
                 <div class="subheading">
                     <p>Select a line to see its current schedule</p>
                     @using (Html.BeginForm("GetRailStations", "NJTransitRouteInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))

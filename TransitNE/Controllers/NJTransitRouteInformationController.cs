@@ -21,7 +21,7 @@ namespace TransitNE.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> GetRailStationsAsync()
+        public async Task<IActionResult> GetRailStations()
         {
             using (var httpClient = new HttpClient())
             {
