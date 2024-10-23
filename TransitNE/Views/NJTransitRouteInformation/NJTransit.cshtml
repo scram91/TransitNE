@@ -1,6 +1,5 @@
-﻿@model TransitNE.Models.BusInputModel
-@{
-    ViewData["Title"] = "SEPTA Route Information";
+﻿@{
+    ViewData["Title"] = "NJ Transit Route Information";
     Layout = "_Layout";
 }
 
@@ -26,7 +25,7 @@
         </div>
         <div class="nj-button">
             <div class="state-layer">
-                <button type="button" onclick="location.href='@Url.Action("NJTransit", "NJTransitRouteInformation")'">NJ Transit</button>
+                <button type="button" onclick="location.href='@Url.Action("Septa", "SeptaRouteInformation")'">NJ Transit</button>
             </div>
         </div>
         <div class="patco-button">
@@ -39,9 +38,9 @@
                 <div class="heading">Septa Regional Rail Information</div>
                 <div class="subheading">
                     <p>Select a line to see its current schedule</p>
-                    @using (Html.BeginForm("GetSelectedLine", "SeptaRouteInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("GetRailStations", "NJTransitRouteInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        @Html.DropDownList("RegionalRailLine", new List<SelectListItem>
+                        @Html.DropDownList("RailLine", new List<SelectListItem>
                     {
                     new SelectListItem{ Text="PlaceHolder", Value = "PlaceHolder" },
                     }, "Select Line")

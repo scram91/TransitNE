@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using TransitNE.Data;
+using TransitNE.Models.NJTransit;
 
 namespace TransitNE.Controllers
 {
@@ -17,25 +20,23 @@ namespace TransitNE.Controllers
         {
             return View();
         }
-
-        public async Task<IActionResult> getRailStationsAsync()
+        [HttpPost]
+        public async Task<IActionResult> GetRailStationsAsync()
         {
-            using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://testraildata.njtransit.com/api/TrainData/getStationList"))
+            using (var httpClient = new HttpClient())
             {
-                request.Headers.TryAddWithoutValidation("accept", "text/plain");
-
-                var multipartContent = new MultipartFormDataContent();
-                multipartContent.Add(new StringContent("638642604401827042"), "token");
-                request.Content = multipartContent;
-
-                var response = await _httpClient.SendAsync(request);
-
-                if (response.IsSuccessStatusCode)
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://testraildata.njtransit.com/api/TrainData/getStationList"))
                 {
+                    request.Headers.TryAddWithoutValidation("accept", "text/plain"); 
 
+                    var multipartContent = new MultipartFormDataContent();
+                    multipartContent.Add(new StringContent("638652253871151576"), "token");
+                    request.Content = multipartContent; 
+
+                    var response = await httpClient.SendAsync(request);
                 }
             }
-            
+
             return View();
         }
         
