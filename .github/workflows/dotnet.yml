@@ -33,17 +33,13 @@ jobs:
       run: dotnet build --no-restore
       
   tests:
+    needs: build
     name: Unit Testing
     runs-on: windows-latest
-
     services:
       chrome:
-	image: selenium/standalone-chrome:latest
-	ports:
-	  - 4444:4444
-	options: >-
-	  --shm-size 2g
-  
+        image: selenium/standalone-chrome:latest
+        
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -52,13 +48,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-
-      - name: Restore Dependencies
-      	run: dotnet restore
-
-      - name: Build
-        run: dotnet build --configuration Release
-	
+      
       - name: Update Database
         run: |
           dotnet tool install --global dotnet-ef
