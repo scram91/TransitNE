@@ -8,7 +8,7 @@ namespace TransitNETesting.Tests.SystemTests
         private readonly IWebDriver _driver;
         public LoginPage()
         {
-            _driver = InitializeDriver();
+            _driver = new ChromeDriver();
             _driver.Navigate().GoToUrl("https://localhost:7126");
         }
 
