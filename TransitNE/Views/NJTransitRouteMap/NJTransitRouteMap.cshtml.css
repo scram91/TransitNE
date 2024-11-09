@@ -211,7 +211,7 @@
         word-wrap: break-word
     }
 
-.nj-button {
+.patco-button {
     width: 174px;
     height: 81px;
     left: 1300px;
@@ -225,7 +225,7 @@
     display: inline-flex
 }
 
-    .nj-button .state-layer {
+    .patco-button .state-layer {
         align-self: stretch;
         flex: 1 1 0;
         padding-left: 24px;
@@ -238,7 +238,7 @@
         display: inline-flex
     }
 
-    .nj-button .label-text {
+    .patco-button .label-text {
         text-align: center;
         color: black;
         font-size: 14px;

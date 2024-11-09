@@ -51,7 +51,14 @@
     display: inline-flex;
 }
 
-    .frame .patco-rail-map {
+    .frame .image-panel {
+        left: 1050px;
+        top: 800px;
+        position: relative;
+    }
+
+
+    .frame .regional-rail-map {
         align-self: stretch;
         height: 314px;
         padding: 64px;
@@ -63,7 +70,7 @@
         display: flex;
     }
 
-    .frame .patco-card-heading {
+    .regional-rail-map .rail-map-image {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
@@ -71,39 +78,7 @@
         display: flex;
     }
 
-    .frame .heading {
-        align-self: stretch;
-        color: #1E1E1E;
-        font-size: 24px;
-        font-family: Arial;
-        font-weight: 600;
-        line-height: 28.80px;
-        word-wrap: break-word;
-    }
-
-    .frame .subheading {
-        align-self: stretch;
-        color: #757575;
-        font-size: 20px;
-        font-family: Arial;
-        font-style: italic;
-        font-weight: 400;
-        line-height: 24px;
-        word-wrap: break-word;
-    }
-
-    .frame .rail-map-image {
-        width: 549px;
-        height: 294px;
-        color: black;
-        font-size: 16px;
-        font-family: Arial;
-        font-weight: 400;
-        line-height: 24px;
-        word-wrap: break-word;
-    }
-
-    .frame .metro-card-grid-icon {
+    .frame .trolley-map-1 {
         align-self: stretch;
         height: 314px;
         padding: 64px;
@@ -115,7 +90,7 @@
         display: flex;
     }
 
-    .frame .metro-card-heading {
+    .trolley-map-1 .trolley-map-one {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
@@ -123,18 +98,7 @@
         display: flex;
     }
 
-    .frame .metro-schedule {
-        width: 549px;
-        height: 294px;
-        color: black;
-        font-size: 16px;
-        font-family: Arial;
-        font-weight: 400;
-        line-height: 24px;
-        word-wrap: break-word;
-    }
-
-    .frame .bus-card-grid-icon {
+    .frame .trolley-map-2 {
         align-self: stretch;
         height: 314px;
         padding: 64px;
@@ -148,7 +112,7 @@
         margin-top: 40px;
     }
 
-    .frame .bus-card-heading {
+    .trolley-map-2 .trolley-map-two {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
@@ -156,24 +120,93 @@
         display: flex;
     }
 
-    .frame .bus-schedule {
-        width: 549px;
-        height: 294px;
-        color: black;
-        font-size: 16px;
+    .frame .norristown {
+        align-self: stretch;
+        height: 314px;
+        padding: 64px;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        gap: 48px;
+        display: flex;
+        float: left;
+        margin-top: 40px;
+    }
+    
+    .norristown .norristown-image {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
+    }
+
+    .frame .subways {
+        align-self: stretch;
+        height: 314px;
+        padding: 64px;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        gap: 48px;
+        display: flex;
+        float: left;
+        margin-top: 40px;
+    }
+
+    .subways .broad {
+        align-self: stretch;
+        color: #1E1E1E;
+        font-size: 24px;
         font-family: Arial;
-        font-weight: 400;
-        line-height: 24px;
+        font-weight: 600;
+        line-height: 28.80px;
         word-wrap: break-word;
     }
 
-    .frame .image-panel {
-        left: 1050px;
-        top: 600px;
-        position: relative;
+    .broad .broad-image {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
     }
 
-.septa-button {
+    .subways .market {
+        align-self: stretch;
+        color: #1E1E1E;
+        font-size: 24px;
+        font-family: Arial;
+        font-weight: 600;
+        line-height: 28.80px;
+        word-wrap: break-word;
+    }
+
+    .market .market-image {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+        display: flex;
+    }
+
+    .frame .bus {
+        align-self: stretch;
+        height: 314px;
+        padding: 64px;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        gap: 48px;
+        display: flex;
+        float: left;
+        margin-top: 40px;
+    }
+
+.patco-button {
     width: 174px;
     height: 81px;
     left: 1300px;
@@ -187,7 +220,7 @@
     display: inline-flex
 }
 
-    .septa-button .state-layer {
+    .patco-button .state-layer {
         align-self: stretch;
         flex: 1 1 0;
         padding-left: 24px;
@@ -200,7 +233,7 @@
         display: inline-flex
     }
 
-    .septa-button .label-text {
+    .patco-button .label-text {
         text-align: center;
         color: black;
         font-size: 14px;

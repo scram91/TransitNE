@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "NJ Transit Route Maps";
+    ViewData["Title"] = "SEPTA Route Maps";
     Layout = "_Layout";
 }
 
@@ -15,7 +15,7 @@
 <body>
     <div class="hero-image">
         <div class="text-content-title">
-            <div class="title">NJ Transit Route Maps</div>
+            <div class="title">SEPTA Route Maps</div>
             <div class="subtitle">Select a different Agency for more information</div>
         </div>
     </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="nj-button">
             <div class="state-layer">
-                <button type="button" onclick="location.href='@Url.Action("SeptaRouteMap", "SeptaRouteMap")'">NJ Transit</button>
+                <button type="button" onclick="location.href='@Url.Action("NJTransitRouteMap", "NJTransitRouteMap")'">NJ Transit</button>
             </div>
         </div>
         <div class="patco-button">
@@ -34,23 +34,35 @@
             </div>
         </div>
         <div class="regional-rail-map">
-            <img class="rail-map-image" src="~/Images/SeptaMaps/SEPTA-line-map-rr.png" width="400px" height="400px" />
+            <img class="rail-map-image" src="~/Images/SeptaMaps/SEPTA-line-map-rr.png" width="150px" height="150px" />
+            <p>
+                <a href="~/Images/SeptaMaps/files/line-map-rr-1.pdf">[DOWNLOAD]</a>
+            </p>
         </div>
         <div class="trolley-map-1">
-            <img class="trolley-map-one" src="~/Images/SeptaMaps/ctl_small.jpg" width="400px" height="400p" />
+            <img class="trolley-map-one" src="~/Images/SeptaMaps/ctl_small.jpg" width="150px" height="150px" />
+            <a href="~/Images/SeptaMaps/files/line-map-trolley-1.pdf">[DOWNLOAD]</a>
         </div>
         <div class="trolley-map-2">
-            <img class="trolley-map-two" src="~/Images/SeptaMaps/Trolley.jpg" />
+            <img class="trolley-map-two" src="~/Images/SeptaMaps/Trolley.jpg" width="150px" height="150px" />
+            <a href="~/Images/SeptaMaps/files/line-map-101-102.pdf">[DOWNLOAD]</a>
         </div>
         <div class="norristown">
-            <img class="norris-image" src="~/Images/SeptaMaps/norristown.PNG" />
+            <img class="norris-image" src="~/Images/SeptaMaps/norristown.PNG" width="100px" height="100px" />
+            <a href="~/Images/SeptaMaps/files/line-map-nhsl.pdf">[DOWNLOAD]</a>
         </div>
         <div class="subways">
             <div class="broad">
-                <img class="broad-image" src="~/Images/SeptaMaps/broad.jpg" />
+                <img class="broad-image" src="~/Images/SeptaMaps/broad.jpg" width="100px" height="100px" />
+                <p>
+                    <a href="~/Images/SeptaMaps/files/line-map-bsl-1.pdf">[DOWNLOAD]</a>
+                </p>
             </div>
             <div class="market">
-                <img class="market-image" src="~/Images/SeptaMaps/market.jpg" />
+                <img class="market-image" src="~/Images/SeptaMaps/market.jpg" width="100px" height="100px" />
+                <p>
+                    <a href="~/Images/SeptaMaps/files/line-map-mfl-1.pdf">[DOWNLOAD]</a>
+                </p>
             </div>
         </div>
         <div class="bus">

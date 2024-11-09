@@ -63,14 +63,6 @@
         display: flex;
     }
 
-    .frame .patco-card-heading {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 8px;
-        display: flex;
-    }
-
     .frame .heading {
         align-self: stretch;
         color: #1E1E1E;
