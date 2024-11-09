@@ -57,6 +57,9 @@ jobs:
       - name: Publish
         run: dotnet publish --configuration Release --output ./publish
 
+      - name: Set connection string
+        run: export TransitNEContextConnection=${{ secrets.TransitNEContextConnection }}
+
       - name: Start Application
         run: nohup dotnet ./publish/TransitNE.dll &
 
