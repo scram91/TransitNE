@@ -32,12 +32,12 @@ jobs:
       run: dotnet build --no-restore
       
   tests:
-    needs: build
     name: Unit Testing
     runs-on: ubuntu-latest
     services:
-      chrome:
+      selenium:
         image: selenium/standalone-chrome:latest
+        options: --shm-size=2g
         
     steps:
       - name: Checkout Code
@@ -47,11 +47,15 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Install Dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build
           
       - name: Unit Tests
         run: dotnet test --configuration Release
-        env:
-          DOTNET_CLT_TELEMETRY_OPTOUT: true
-          DOTNET_NOLOGO: true
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-          NUGET_XMLDOC_MODE: skip
+
+      - name: Clean up
+        run: docker stop selenium
