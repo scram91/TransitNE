@@ -33,4 +33,12 @@ public class TransitNEContext : IdentityDbContext
     public DbSet<TransitNE.Models.BusTrolleyRouteModel> BusTrolleyRouteModels { get; protected set; } = default!;
     public DbSet<TransitNE.Models.StopModel> StopModels { get; set; }
     public DbSet<TransitNE.Models.BusInputModel> BusInputModels { get; protected set;} = default!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlite("DataSource=:memory:"); // Default to SQLite in-memory if not configured
+        }
+    }
 }
