@@ -8,8 +8,25 @@ namespace TransitNETesting.Tests.SystemTests
         private readonly IWebDriver _driver;
         public LoginPage()
         {
-            _driver = new ChromeDriver();
+            _driver = InitializeDriver();
             _driver.Navigate().GoToUrl("https://localhost:7126");
+        }
+
+        public static IWebDriver InitializeDriver()
+        {
+            var options = new ChromeOptions();
+        
+            // Set Chrome to run in headless mode
+            options.AddArgument("--headless");
+            options.AddArgument("--no-sandbox");  // Required for some CI environments
+            options.AddArgument("--disable-dev-shm-usage");  // Avoids the "DevToolsActivePort file doesn't exist" error
+            options.AddArgument("--remote-allow-origins=*");  // Necessary in some configurations for CORS issues
+        
+            // Path to the Chrome WebDriver (if not using the Docker image with built-in WebDriver)
+            options.BinaryLocation = "/usr/bin/google-chrome"; 
+
+            // Initialize WebDriver with options
+            return new ChromeDriver(options);
         }
         
         public void Dispose()
