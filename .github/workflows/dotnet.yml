@@ -58,7 +58,7 @@ jobs:
         run: dotnet publish --configuration Release --output ./publish
 
       - name: Set connection string
-        run: export TransitNEContextConnection=${{ secrets.TransitNEContextConnection }}
+        run: export TransitNEContextConnection="Server=(localdb)\\mssqllocaldb;Database=TransitNE;Trusted_Connection=True;MultipleActiveResultSets=true"
 
       - name: Start Application
         run: nohup dotnet ./publish/TransitNE.dll &
