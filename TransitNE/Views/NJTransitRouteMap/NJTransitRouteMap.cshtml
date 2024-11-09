@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "NJ Transit Route Maps";
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -12,29 +13,43 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="title-block">
-    <div class="text-content-title">
-        <div class="title">Septa Route Maps</div>
-        <div class="subtitle">Select a different Agency for more information</div>
+    <div class="hero-image">
+        <div class="text-content-title">
+            <div class="title">NJ Transit Route Maps</div>
+            <div class="subtitle">Select a different Agency for more information</div>
+        </div>
     </div>
-</div>
-<div class="nj-button">
-    <div class="state-layer">
-        <button type="button" onclick="location.href='@Url.Action("SeptaRouteMap", "SeptaRouteMap")'">SEPTA</button>
-    </div>
-</div>
-<div class="patco-button">
-    <div class="state-layer">
-        <button type="button" onclick="location.href='@Url.Action("PatcoRouteMap", "PatcoRouteMap")'">PATCO</button> 
-    </div>
-</div>
-    <div class="nj-rail-map">
-        <img class="rail-map-image" src="~/Images/SeptaMaps/SEPTA-line-map-rr.png" width="400px" height="400px" />
-        <p>PLACEHOLDER Image and Download Link</p>
-    </div>
-    <div class="nj-bus">
-        <img class="trolley-map-one" src="~/Images/SeptaMaps/ctl_small.jpg" width="400px" height="400p" />
-        <p>PLACEHOLDER Image and Download Link</p>
+    <div class="frame">
+        <div class="image-panel">
+            <img class="septa-text-svg" src="~/Images/SEPTA.png" width="400px" height="400px" />
+        </div>
+        <div class="nj-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("SeptaRouteMap", "SeptaRouteMap")'">NJ Transit</button>
+            </div>
+        </div>
+        <div class="patco-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("PatcoRouteMap", "PatcoRouteMap")'">PATCO</button>
+            </div>
+        </div>
+        <div class="regional-rail-map">
+            <img class="rail-map-image" src="~/Images/NJTransitMaps/NJT System Map April 2023.pdf" width="400px" height="400px" />
+        </div>
+        <div class="trolley-map-1">
+            <img class="trolley-map-one" src="~/Images/NJTransitMaps/HBLR_RSM_080522_low.pdf" width="400px" height="400p" />
+        </div>
+        <div class="trolley-map-2">
+            <img class="trolley-map-two" src="~/Images/NJTransitMaps/njtransitrail.png" />
+        </div>
+        <div class="norristown">
+            <img class="norris-image" src="~/Images/NJTransitMaps/NLR_100622_FINAL_Web.pdf" />
+        </div>
+        <div class="subways">
+            <div class="broad">
+                <img class="broad-image" src="~/Images/NJTransitMaps/sf_lr_rvl_map.pdf" />
+            </div>
+        </div>
     </div>
 </body>
 </html>

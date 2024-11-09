@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "PATCO Route Maps";
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -12,25 +13,32 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="title-block">
-    <div class="text-content-title">
-        <div class="title">Septa Route Maps</div>
-        <div class="subtitle">Select a different Agency for more information</div>
-    </div>
-</div>
-    <div class="nj-button">
-        <div class="state-layer">
-            <button type="button" onclick="location.href='@Url.Action("NJTransitRouteMap", "NJTransitRouteMap")'">NJ Transit</button>
+    <div class="hero-image">
+        <div class="text-content-title">
+            <div class="title">PATCO Route Maps</div>
+            <div class="subtitle">Select a different Agency for more information</div>
         </div>
     </div>
-    <div class="patco-button">
-        <div class="state-layer">
-            <button type="button" onclick="location.href='@Url.Action("SeptaRouteMap", "SeptaRouteMap")'">SEPTA</button>
+    <div class="frame">
+        <div class="image-panel">
+            <img class="septa-text-svg" src="~/Images/PATCO_Line.png" width="400px" height="400px" />
+        </div>
+        <div class="septa-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("SeptaRouteMap", "SeptaRouteMap")'">NJ Transit</button>
+            </div>
+        </div>
+        <div class="nj-button">
+            <div class="state-layer">
+                <button type="button" onclick="location.href='@Url.Action("NJTransitRouteMap", "NJTransitRouteMap")'">PATCO</button>
+            </div>
+        </div>
+        <div class="patco-rail-map">
+            <div class="heading">PATCO Rail Map</div>
+            <div class="subheading">
+                <img class="rail-map-image" src="~/Images/PatcoMap/PATCO_LineMap.jpg" width="400px" height="400px"/>
+            </div>
         </div>
     </div>
-<div class="patco-rail-map">
-    <img class="rail-map-image" src="~/Images/SeptaMaps/SEPTA-line-map-rr.png" width="400px" height="400px" />
-    <p>PLACEHOLDER Image and Download Link</p>
-</div>
 </body>
 </html>
