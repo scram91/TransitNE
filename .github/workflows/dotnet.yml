@@ -57,5 +57,8 @@ jobs:
       - name: Unit Tests
         run: dotnet test --configuration Release
 
+      - name: Show selenium logs
+        run: docker logs selenium
+
       - name: Clean up
         run: docker stop selenium
