@@ -40,9 +40,11 @@ namespace TransitNETesting.Utilities
         }
 
         public TransitNEContext CreateContext()
-            => new TransitNEContext(
-                new DbContextOptionsBuilder<TransitNEContext>()
-                .UseSqlServer(ConnectionString)
-                .Options);
+        {
+            return new TransitNEContext(
+                        new DbContextOptionsBuilder<TransitNEContext>()
+                            .UseSqlite("DataSource=:memory:") // Use SQLite in-memory
+                            .Options);
+        }
     }
 }
