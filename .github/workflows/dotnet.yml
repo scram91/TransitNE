@@ -57,20 +57,14 @@ jobs:
       - name: Publish
         run: dotnet publish --configuration Release --output ./publish
 
-      - name: Set connection string
-        run: export TransitNEContextConnection="Server=(localdb)\\mssqllocaldb;Database=TransitNE;Trusted_Connection=True;MultipleActiveResultSets=true"
-
       - name: Start Application
-        run: nohup dotnet ./publish/TransitNE.dll &
+        run: nohup dotnet ./publish/TransitNETesting.dll &
 
       - name: Wait for app to start
         run: sleep 10
           
       - name: Unit Tests
         run: dotnet test --configuration Release
-
-      - name: Show selenium logs
-        run: docker logs selenium
 
       - name: Clean up
         run: docker stop selenium
