@@ -58,13 +58,13 @@ jobs:
         run: dotnet publish --configuration Release --output ./publish
 
       - name: Start Application
-        run: nohup dotnet ./publish/TransitNETesting.dll &
+        run: nohup dotnet ./publish/TransitNE.dll &
 
       - name: Wait for app to start
         run: sleep 10
           
       - name: Unit Tests
-        run: dotnet test --configuration Release
+        run: dotnet test
 
       - name: Clean up
         run: docker stop selenium
