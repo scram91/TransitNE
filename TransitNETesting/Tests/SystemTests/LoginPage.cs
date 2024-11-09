@@ -8,12 +8,6 @@ namespace TransitNETesting.Tests.SystemTests
         private readonly IWebDriver _driver;
         public LoginPage()
         {
-            _driver = new ChromeDriver();
-            _driver.Navigate().GoToUrl("https://localhost:7126");
-        }
-
-        public static IWebDriver InitializeDriver()
-        {
             var options = new ChromeOptions();
         
             // Set Chrome to run in headless mode
@@ -25,8 +19,9 @@ namespace TransitNETesting.Tests.SystemTests
             // Path to the Chrome WebDriver (if not using the Docker image with built-in WebDriver)
             options.BinaryLocation = "/usr/bin/google-chrome"; 
 
-            // Initialize WebDriver with options
-            return new ChromeDriver(options);
+            _driver = new ChromeDriver(options);
+            
+            _driver.Navigate().GoToUrl("https://localhost:7126");
         }
         
         public void Dispose()
