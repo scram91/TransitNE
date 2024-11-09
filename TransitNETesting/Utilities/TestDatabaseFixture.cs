@@ -42,7 +42,7 @@ namespace TransitNETesting.Utilities
         public TransitNEContext CreateContext()
             => new TransitNEContext(
                 new DbContextOptionsBuilder<TransitNEContext>()
-                    .UseSqlite("DataSource=:memory:") // Use SQLite in-memory
-                    .Options);
+                .UseSqlServer(ConnectionString)
+                .Options);
     }
 }
