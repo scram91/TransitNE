@@ -1,116 +1,159 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Moq;
-using System.Net.Http;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TransitNE.Areas.Identity.Pages.Account;
-using TransitNE.Data;
 using TransitNE.Models;
+using Xunit;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace TransitNETesting.Tests.UnitTests
 {
+
     public class RegisterModelTests
     {
         private readonly Mock<UserManager<TransitNEUser>> _userManagerMock;
         private readonly Mock<SignInManager<TransitNEUser>> _signInManagerMock;
+        private readonly Mock<IUserStore<TransitNEUser>> _userStoreMock;
+        private readonly Mock<IUserEmailStore<TransitNEUser>> _emailStoreMock;
+        private readonly Mock<ILogger<RegisterModel>> _loggerMock;
+        private readonly Mock<IEmailSender> _emailSenderMock;
         private readonly RegisterModel _registerModel;
-        private readonly DefaultHttpContext _httpContext;
-
 
         public RegisterModelTests()
         {
-            _httpContext = new DefaultHttpContext();
-
-            _userManagerMock = MockUserManager();
-            _signInManagerMock = MockSignInManager();
-
-            _registerModel = new RegisterModel(_userManagerMock.Object, new UserStore<TransitNEUser>(null, null), _signInManagerMock.Object,
-                                    new LoggerFactory().CreateLogger<RegisterModel>(), new NoOpEmailSender())
-            {
-                PageContext = new PageContext { HttpContext = _httpContext }
-            };
-        }
-
-        private Mock<UserManager<TransitNEUser>> MockUserManager()
-        {
-            // UserManager dependencies
-            var userStoreMock = new Mock<IUserStore<TransitNEUser>>();
-            var optionsMock = new Mock<IOptions<IdentityOptions>>();
-            var passwordHasherMock = new Mock<IPasswordHasher<TransitNEUser>>();
-            var userValidators = new List<IUserValidator<TransitNEUser>>();
-            var passwordValidators = new List<IPasswordValidator<TransitNEUser>>();
-            var keyNormalizer = new Mock<ILookupNormalizer>();
-            var identityErrorDescriber = new Mock<IdentityErrorDescriber>();
-            var services = new Mock<IServiceProvider>();
-            var loggerMock = new Mock<ILogger<UserManager<TransitNEUser>>>();
-
-            return new Mock<UserManager<TransitNEUser>>(
-                userStoreMock.Object,
-                optionsMock.Object,
-                passwordHasherMock.Object,
-                userValidators,
-                passwordValidators,
-                keyNormalizer.Object,
-                identityErrorDescriber.Object,
-                services.Object,
-                loggerMock.Object);
-        }
-
-        private Mock<SignInManager<TransitNEUser>> MockSignInManager()
-        {
-            var contextAccessor = new Mock<IHttpContextAccessor>();
-            contextAccessor.Setup(_ => _.HttpContext).Returns(_httpContext);
-
-            var claimsFactory = new Mock<IUserClaimsPrincipalFactory<TransitNEUser>>();
-            var options = Options.Create(new IdentityOptions());
-            var logger = new Mock<ILogger<SignInManager<TransitNEUser>>>();
-            var schemes = new Mock<IAuthenticationSchemeProvider>();
-            var confirmation = new Mock<IUserConfirmation<TransitNEUser>>();
-
-            return new Mock<SignInManager<TransitNEUser>>(
+            _userStoreMock = new Mock<IUserStore<TransitNEUser>>();
+            _emailStoreMock = _userStoreMock.As<IUserEmailStore<TransitNEUser>>();
+            _userManagerMock = new Mock<UserManager<TransitNEUser>>(_userStoreMock.Object, null, null, null, null, null,
+                null, null, null);
+            _signInManagerMock = new Mock<SignInManager<TransitNEUser>>(
                 _userManagerMock.Object,
-                contextAccessor.Object,
-                claimsFactory.Object,
-                options,
-                logger.Object,
-                schemes.Object,
-                confirmation.Object);
+                new Mock<IHttpContextAccessor>().Object,
+                new Mock<IUserClaimsPrincipalFactory<TransitNEUser>>().Object,
+                null, null, null, null);
+            _loggerMock = new Mock<ILogger<RegisterModel>>();
+            _emailSenderMock = new Mock<IEmailSender>();
+
+            _registerModel = new RegisterModel(
+                _userManagerMock.Object,
+                _userStoreMock.Object,
+                _signInManagerMock.Object,
+                _loggerMock.Object,
+                _emailSenderMock.Object);
         }
 
-        private IServiceProvider SetupServiceProvider()
+        [Fact]
+        public async Task OnGetAsync_SetsExternalLogins()
         {
-            var serviceProvider = new Mock<IServiceProvider>();
-            serviceProvider.Setup(sp => sp.GetService(typeof(SignInManager<TransitNEUser>))).Returns(_signInManagerMock);
-            serviceProvider.Setup(sp => sp.GetService(typeof(UserManager<TransitNEUser>))).Returns(_userManagerMock);
-            serviceProvider.Setup(sp => sp.GetService(typeof(IUrlHelperFactory))).Returns(MockUrlHelperFactory().Object);
-            serviceProvider.Setup(sp => sp.GetService(typeof(IAuthenticationService))).Returns(new Mock<IAuthenticationService>().Object);
-            return serviceProvider.Object;
+            // Arrange
+            var externalSchemes = new List<AuthenticationScheme>
+                { new AuthenticationScheme("Google", "Google", typeof(IAuthenticationHandler)) };
+            _signInManagerMock.Setup(m => m.GetExternalAuthenticationSchemesAsync()).ReturnsAsync(externalSchemes);
+
+            // Act
+            await _registerModel.OnGetAsync();
+
+            // Assert
+            Assert.Equal(externalSchemes, _registerModel.ExternalLogins);
         }
 
-        private Mock<IUrlHelperFactory> MockUrlHelperFactory()
+        [Fact]
+        public async Task OnPostAsync_WithValidModel_CreatesUserAndSignsIn()
         {
-            var urlHelperMock = new Mock<IUrlHelper>();
-            urlHelperMock.Setup(u => u.Content(It.IsAny<string>())).Returns((string path) => path);
+            // Arrange
+            _registerModel.Input = new RegisterModel.InputModel
+            {
+                Email = "test@example.com",
+                Password = "Password123!",
+                ConfirmPassword = "Password123!",
+                FirstName = "John",
+                LastName = "Doe"
+            };
 
-            var urlHelperFactoryMock = new Mock<IUrlHelperFactory>();
-            urlHelperFactoryMock.Setup(f => f.GetUrlHelper(It.IsAny<ActionContext>())).Returns(urlHelperMock.Object);
-            return urlHelperFactoryMock;
+            _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<TransitNEUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
+            _signInManagerMock.Setup(sm => sm.SignInAsync(It.IsAny<TransitNEUser>(), false, null))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _registerModel.OnPostAsync("~/");
+
+            // Assert
+            var redirectResult = Assert.IsType<LocalRedirectResult>(result);
+            Assert.Equal("~/", redirectResult.Url);
+            _userManagerMock.Verify(um => um.CreateAsync(It.IsAny<TransitNEUser>(), It.IsAny<string>()), Times.Once);
+            _signInManagerMock.Verify(sm => sm.SignInAsync(It.IsAny<TransitNEUser>(), false, null), Times.Once);
         }
 
-        private void ConfigureHttpContext(bool isAuthenticated)
+        [Fact]
+        public async Task OnPostAsync_WithInvalidModel_ReturnsPageResult()
         {
-            var claimsPrincipal = new Mock<ClaimsPrincipal>();
-            claimsPrincipal.Setup(p => p.Identity.IsAuthenticated).Returns(isAuthenticated);
-            _httpContext.User = claimsPrincipal.Object;
-            _httpContext.RequestServices = SetupServiceProvider();
+            // Arrange
+            _registerModel.ModelState.AddModelError("Email", "Email is required");
+
+            // Act
+            var result = await _registerModel.OnPostAsync();
+
+            // Assert
+            Assert.IsType<PageResult>(result);
+        }
+
+        [Fact]
+        public async Task OnPostAsync_CreatesUserAndSendsConfirmationEmail()
+        {
+            // Arrange
+            _registerModel.Input = new RegisterModel.InputModel
+            {
+                Email = "test@example.com",
+                Password = "Password123!",
+                ConfirmPassword = "Password123!"
+            };
+
+            _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<TransitNEUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
+            _userManagerMock.Setup(um => um.GetUserIdAsync(It.IsAny<TransitNEUser>())).ReturnsAsync("user-id");
+            _userManagerMock.Setup(um => um.GenerateEmailConfirmationTokenAsync(It.IsAny<TransitNEUser>()))
+                .ReturnsAsync("confirmation-token");
+
+            // Act
+            await _registerModel.OnPostAsync("~/");
+
+            // Assert
+            _emailSenderMock.Verify(es => es.SendEmailAsync(
+                    It.IsAny<string>(),
+                    "Confirm your email",
+                    It.Is<string>(msg => msg.Contains("Please confirm your account by <a href="))),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task OnPostAsync_WithRequireConfirmedAccount_ReturnsRedirectToPageResult()
+        {
+            // Arrange
+            _registerModel.Input = new RegisterModel.InputModel
+            {
+                Email = "test@example.com",
+                Password = "Password123!",
+                ConfirmPassword = "Password123!"
+            };
+
+            _userManagerMock.Setup(um => um.Options.SignIn.RequireConfirmedAccount).Returns(true);
+            _userManagerMock.Setup(um => um.CreateAsync(It.IsAny<TransitNEUser>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
+
+            // Act
+            var result = await _registerModel.OnPostAsync("~/");
+
+            // Assert
+            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            Assert.Equal("RegisterConfirmation", redirectToPageResult.PageName);
         }
     }
 }
