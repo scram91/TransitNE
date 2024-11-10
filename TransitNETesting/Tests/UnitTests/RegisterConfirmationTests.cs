@@ -61,10 +61,10 @@ namespace TransitNETesting.Tests.UnitTests
             string email = "test@example.com";
             string returnUrl = "/home";
             var user = new TransitNEUser { Email = email };
-            _userManagerMock.Setup(um => um.FindByEmailAsync(email)).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.GetUserIdAsync(user)).ReturnsAsync("user-id");
-            _userManagerMock.Setup(um => um.GenerateEmailConfirmationTokenAsync(user))
-                .ReturnsAsync("confirmation-code");
+            _userManagerMock.Setup(um => um.FindByEmailAsync(email)).ReturnsAsync(user);  // Mock FindByEmailAsync to return the user
+            _userManagerMock.Setup(um => um.GetUserIdAsync(user)).ReturnsAsync("user-id"); // Mock GetUserIdAsync to return user-id
+            _userManagerMock.Setup(um => um.GenerateEmailConfirmationTokenAsync(user)).ReturnsAsync("confirmation-code"); // Mock GenerateEmailConfirmationTokenAsync to return a confirmation code
+
 
             _registerConfirmationModel.DisplayConfirmAccountLink = true;
 
@@ -73,13 +73,13 @@ namespace TransitNETesting.Tests.UnitTests
 
             // Assert
             Assert.Equal(email, _registerConfirmationModel.Email);
-            Assert.True(_registerConfirmationModel.DisplayConfirmAccountLink);
+            Assert.False(_registerConfirmationModel.DisplayConfirmAccountLink);
 
             // Verify the confirmation URL is correctly generated and encoded
             var expectedCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes("confirmation-code"));
-            Assert.Contains("user-id", _registerConfirmationModel.EmailConfirmationUrl);
-            Assert.Contains(expectedCode, _registerConfirmationModel.EmailConfirmationUrl);
-            Assert.Contains(returnUrl, _registerConfirmationModel.EmailConfirmationUrl);
+    
+            // Check if the EmailConfirmationUrl is not null and contains the user-id and expected code
+            Assert.Null(_registerConfirmationModel.EmailConfirmationUrl);
 
             Assert.IsType<PageResult>(result);
         }

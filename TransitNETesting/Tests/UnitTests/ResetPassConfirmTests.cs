@@ -16,7 +16,7 @@ namespace TransitNETesting.Tests.UnitTests
             model.OnGet();
 
             // Assert
-            Assert.IsType<PageModel>(model);
+            Assert.IsType<ResetPasswordConfirmationModel>(model);
         }
     }
 }
