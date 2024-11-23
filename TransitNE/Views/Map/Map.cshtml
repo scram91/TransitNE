@@ -47,27 +47,7 @@
             });
             marker.setMap(map);
         }
-
-        function calcRoute(){
-            var start = document.getElementById('startLocation').value;
-            var end = document.getElementById('endLocation').value;
-            var request = {
-                origin: start,
-                destination: end,
-                travelMode: google.maps.DirectionsTravelMode.TRANSIT
-            };
-            directionsService.route(request, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                }
-            });
-        }
-
-        function Button1_onclick() {
-            calcRoute();
-        }
-
-        window.onload = InitializeMap;
+       // window.onload = InitializeMap;
     </script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCU6X7lKWFHxKdiMMEBKyVR3FOzw83D0kw"></script>
