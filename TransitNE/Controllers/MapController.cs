@@ -8,5 +8,14 @@ namespace TransitNE.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Map(FormCollection form)
+        {
+            ViewBag.Message = "Start Address: " + form["startLocation"];
+           // ViewBag.Message = "End Address: " + form["endLocation"];
+
+            return View();
+        }
     }
 }
