@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TransitNE.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="css/StyleSheet.css" />
 </head>
 
 <body>
@@ -31,7 +30,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="SeptaRouteMap"
-                                asp-action="SeptaRouteMap">Route Maps</a>
+                               asp-action="SeptaRouteMap">Route Maps</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TripPlanner"
+                               asp-action="Map">Trip Planner</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
