@@ -39,4 +39,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\tests\" />
+  </ItemGroup>
+
 </Project>
