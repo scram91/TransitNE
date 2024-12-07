@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Trip Planner";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key="></script>
+</head>
+<body onload="InitializeMap()">
+<div>
+    <input id="startLocation" type="text" placeholder="Start Location" />
+    <input id="endLocation" type="text" placeholder="End Location" />
+    <label for="preference">Route Preference:</label>
+    <select id="preference">
+        <option value="fastest">Fastest Route</option>
+        <option value="shortest">Shortest Route</option>
+    </select>
+    <button onclick="calculateRoute()">Get Directions</button>
+</div>
+    <div>
+        <ul id="routeSummary"></ul>
+    </div>
+<div id="map" style="width:100%;height:400px;"></div>
+<!--Reference to external JS script -->
+<script type="text/javascript" src="~/js/map.js"></script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function(){
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+</body>
+</html>

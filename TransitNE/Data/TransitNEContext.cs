@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using TransitNE.Models;
 
 namespace TransitNE.Data;
 
-public class TransitNEContext : IdentityDbContext
+public class TransitNEContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext
 {
     public TransitNEContext(DbContextOptions<TransitNEContext> options)
         : base(options)
