@@ -8,71 +8,26 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=API_KEY"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key="></script>
 </head>
 <body onload="InitializeMap()">
 <div>
     <input id="startLocation" type="text" placeholder="Start Location" />
     <input id="endLocation" type="text" placeholder="End Location" />
-        <button onclick="calculateRoute()">Get Directions</button>
+    <label for="preference">Route Preference:</label>
+    <select id="preference">
+        <option value="fastest">Fastest Route</option>
+        <option value="shortest">Shortest Route</option>
+    </select>
+    <button onclick="calculateRoute()">Get Directions</button>
 </div>
+    <div>
+        <ul id="routeSummary"></ul>
+    </div>
 <div id="map" style="width:100%;height:400px;"></div>
+<!--Reference to external JS script -->
+<script type="text/javascript" src="~/js/map.js"></script>
 
-    <script type="text/javascript">
-        let geocoder, directionsService, directionsRenderer;
-
-        function InitializeMap() {
-            // Set the Latitude and Longitude of the Map
-            var myAddress = new google.maps.LatLng(39.9526, -75.1652);
-
-            // Create Options or set different Characteristics of Google Map
-            var mapOptions = {
-                center: myAddress,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            // Display the Google map in the div control with the defined Options
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            // Initialize DirectionsService and DirectionsRenderer
-            directionsService = new google.maps.DirectionsService();
-            directionsRenderer = new google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(map);
-
-            // Initialize Autocomplete for input fields
-              autocompleteStart = new google.maps.places.Autocomplete(document.getElementById("startLocation"));
-              autocompleteEnd = new google.maps.places.Autocomplete(document.getElementById("endLocation"));
-
-            // Restrict autocomplete to focus on relevant geographies
-            autocompleteStart.setFields(["geometry", "formatted_address"]);
-            autocompleteEnd.setFields(["geometry", "formatted_address"]);
-
-        }
-
-        function calculateRoute() {
-            const start = document.getElementById("startLocation").value;
-            const end = document.getElementById("endLocation").value;
-
-            if (!start || !end) {
-                alert("Please enter both start and end locations.");
-                return;
-            }
-            
-            directionsService.route( {
-                    origin: start,
-                    destination: end,
-                    travelMode: google.maps.TravelMode.TRANSIT,
-                },
-                (result, status) => {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        directionsRenderer.setDirections(result);
-                    } else {
-                        alert("Could not calculate direction: " + status);
-                    }
-                }
-            );
-        }
-    </script>
     @if (ViewBag.Message != null)
     {
         <script type="text/javascript">
