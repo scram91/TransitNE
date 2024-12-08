@@ -35,7 +35,7 @@ jobs:
   dotnet_tests:
     needs: build
     name: Unit Testing
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     services:
       selenium:
         image: selenium/standalone-chrome
