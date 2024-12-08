@@ -21,6 +21,8 @@ public class SeptaRouteInformationUatTests : IDisposable
         // Initialize the Chrome driver. Ensure chromedriver is on your PATH or in the project directory.
         var options = new ChromeOptions();
         options.AddArgument("--headless"); // Run in headless mode for CI/CD
+        options.AddArgument("--no-sandbox");
+        options.AddArgument("--disable-dev-shm-usage");
         _driver = new ChromeDriver(options);
     }
 

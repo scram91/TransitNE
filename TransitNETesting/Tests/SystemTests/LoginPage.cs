@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using Microsoft.Extensions.Options;
 
 namespace TransitNETesting.Tests.SystemTests
 {
@@ -8,7 +9,13 @@ namespace TransitNETesting.Tests.SystemTests
         private readonly IWebDriver _driver;
         public LoginPage()
         {
-            _driver = new ChromeDriver();
+
+            var options = new ChromeOptions();
+            options.AddArgument("--headless"); // Recommended for CI environments
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            _driver = new ChromeDriver(options);
+            
             _driver.Navigate().GoToUrl("https://localhost:7126");
         }
         

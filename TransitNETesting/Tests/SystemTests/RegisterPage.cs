@@ -9,6 +9,11 @@ namespace TransitNETesting.Tests.SystemTests
 
         public RegisterPage()
         {
+
+            var options = new ChromeOptions();
+            options.AddArgument("--headless"); // Recommended for CI environments
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
             _driver = new ChromeDriver();
             _driver.Navigate().GoToUrl("https://localhost:7126"); 
         }
