@@ -51,12 +51,6 @@ namespace TransitNETesting.Tests.UnitTests
                 null // Add any other necessary null or mocked dependencies
             );
 
-            // Check if SignInManager was properly instantiated
-            if (_mockSignInManager == null)
-            {
-                throw new InvalidOperationException("SignInManager was not properly instantiated.");
-            }
-
             // Initialize the SetPasswordModel with the mocks
             _model = new SetPasswordModel(_mockUserManager.Object, _mockSignInManager);
 

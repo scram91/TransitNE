@@ -1,150 +1,133 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Moq;
-using TransitNE.Areas.Identity.Pages.Account.Manage;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Xunit;
+using TransitNE.Areas.Identity.Pages.Account.Manage;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace TransitNETesting.Tests.UnitTests
 {
-    public class ManageNavPagesTests
+public class ManageNavPagesTests
+{
+    private ViewContext CreateViewContext(string activePage)
     {
-        private readonly Mock<ViewContext> _mockViewContext;
-
-        public ManageNavPagesTests()
+        var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
         {
-            _mockViewContext = new Mock<ViewContext>();
-        }
+            ["ActivePage"] = activePage
+        };
 
-        [Fact]
-        public void PageNavClass_ReturnsActive_ForCorrectPage()
+        var actionDescriptor = new ActionDescriptor
         {
-            // Arrange
-            var activePage = "Index";
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns(activePage);
+            DisplayName = activePage
+        };
 
-            // Act
-            var result = ManageNavPages.PageNavClass(_mockViewContext.Object, "Index");
-
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void PageNavClass_ReturnsNull_ForIncorrectPage()
+        return new ViewContext
         {
-            // Arrange
-            var activePage = "Email";
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns(activePage);
+            ViewData = viewData,
+            ActionDescriptor = actionDescriptor
+        };
+    }
 
-            // Act
-            var result = ManageNavPages.PageNavClass(_mockViewContext.Object, "Index");
+    [Theory]
+    [InlineData("Index", "Index", "active")]
+    [InlineData("Index", "Email", null)]
+    [InlineData("Email", "Email", "active")]
+    [InlineData("Email", "ChangePassword", null)]
+    [InlineData("ChangePassword", "ChangePassword", "active")]
+    [InlineData("ChangePassword", "Index", null)]
+    public void PageNavClass_ReturnsExpected(string activePage, string testPage, string expected)
+    {
+        // Arrange
+        var viewContext = CreateViewContext(activePage);
 
-            // Assert
-            Assert.Null(result);
-        }
+        // Act
+        var result = ManageNavPages.PageNavClass(viewContext, testPage);
 
-        [Fact]
-        public void IndexNavClass_ReturnsActive_ForIndexPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("Index");
+        // Assert
+        Assert.Equal(expected, result);
+    }
 
-            // Act
-            var result = ManageNavPages.IndexNavClass(_mockViewContext.Object);
+    [Theory]
+    [InlineData("Index", "active")]
+    [InlineData("Email", null)]
+    public void IndexNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.IndexNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-            // Assert
-            Assert.Equal("active", result);
-        }
+    [Theory]
+    [InlineData("Email", "active")]
+    [InlineData("Index", null)]
+    public void EmailNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.EmailNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-        [Fact]
-        public void EmailNavClass_ReturnsActive_ForEmailPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("Email");
+    [Theory]
+    [InlineData("ChangePassword", "active")]
+    [InlineData("Email", null)]
+    public void ChangePasswordNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.ChangePasswordNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-            // Act
-            var result = ManageNavPages.EmailNavClass(_mockViewContext.Object);
+    [Theory]
+    [InlineData("DownloadPersonalData", "active")]
+    [InlineData("Index", null)]
+    public void DownloadPersonalDataNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.DownloadPersonalDataNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-            // Assert
-            Assert.Equal("active", result);
-        }
+    [Theory]
+    [InlineData("DeletePersonalData", "active")]
+    [InlineData("Email", null)]
+    public void DeletePersonalDataNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.DeletePersonalDataNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-        [Fact]
-        public void ChangePasswordNavClass_ReturnsActive_ForChangePasswordPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("ChangePassword");
+    [Theory]
+    [InlineData("ExternalLogins", "active")]
+    [InlineData("ChangePassword", null)]
+    public void ExternalLoginsNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.ExternalLoginsNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-            // Act
-            var result = ManageNavPages.ChangePasswordNavClass(_mockViewContext.Object);
+    [Theory]
+    [InlineData("PersonalData", "active")]
+    [InlineData("ExternalLogins", null)]
+    public void PersonalDataNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.PersonalDataNavClass(viewContext);
+        Assert.Equal(expected, result);
+    }
 
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void TwoFactorAuthenticationNavClass_ReturnsActive_ForTwoFactorAuthenticationPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("TwoFactorAuthentication");
-
-            // Act
-            var result = ManageNavPages.TwoFactorAuthenticationNavClass(_mockViewContext.Object);
-
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void PersonalDataNavClass_ReturnsActive_ForPersonalDataPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("PersonalData");
-
-            // Act
-            var result = ManageNavPages.PersonalDataNavClass(_mockViewContext.Object);
-
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void ExternalLoginsNavClass_ReturnsActive_ForExternalLoginsPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("ExternalLogins");
-
-            // Act
-            var result = ManageNavPages.ExternalLoginsNavClass(_mockViewContext.Object);
-
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void DeletePersonalDataNavClass_ReturnsActive_ForDeletePersonalDataPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("DeletePersonalData");
-
-            // Act
-            var result = ManageNavPages.DeletePersonalDataNavClass(_mockViewContext.Object);
-
-            // Assert
-            Assert.Equal("active", result);
-        }
-
-        [Fact]
-        public void DownloadPersonalDataNavClass_ReturnsActive_ForDownloadPersonalDataPage()
-        {
-            // Arrange
-            _mockViewContext.Setup(v => v.ViewData["ActivePage"]).Returns("DownloadPersonalData");
-
-            // Act
-            var result = ManageNavPages.DownloadPersonalDataNavClass(_mockViewContext.Object);
-
-            // Assert
-            Assert.Equal("active", result);
-        }
+    [Theory]
+    [InlineData("TwoFactorAuthentication", "active")]
+    [InlineData("DeletePersonalData", null)]
+    public void TwoFactorAuthenticationNavClass_ReturnsExpected(string activePage, string expected)
+    {
+        var viewContext = CreateViewContext(activePage);
+        var result = ManageNavPages.TwoFactorAuthenticationNavClass(viewContext);
+        Assert.Equal(expected, result);
     }
 }
+}
+

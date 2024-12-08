@@ -5,6 +5,8 @@ using TransitNE.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Data.Common;
 using Microsoft.Data.Sqlite;
+using TransitNE.Controllers.Interfaces;
+using TransitNE.Controllers.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,15 +82,15 @@ builder.Services.AddSingleton<DbConnection>(container =>
     return connection;
 });
 
-builder.Services.AddDbContext<TransitNEContext>((container, options) =>
-{
-    var connection = container.GetRequiredService<DbConnection>();
-    options.UseSqlite(connection);
-});
-
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/SecurePage");
+});
+
+builder.Services.AddHttpClient<ISeptaApiService, SeptaApiService>(client =>
+{
+    client.BaseAddress = new Uri("https://www3.septa.org/api/");
+    // Set default headers if necessary
 });
 
 var app = builder.Build();

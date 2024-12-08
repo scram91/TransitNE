@@ -3,6 +3,8 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
+namespace TransitNETesting.Tests.SystemTests
+{
 public class HomePageUatTests : IDisposable
 {
     private readonly IWebDriver _driver;
@@ -70,5 +72,6 @@ public class HomePageUatTests : IDisposable
     {
         _driver.Quit();
     }
+}
 }
 

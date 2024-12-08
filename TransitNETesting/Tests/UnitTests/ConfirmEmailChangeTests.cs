@@ -1,38 +1,36 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using TransitNE.Areas.Identity.Pages.Account;
 using TransitNE.Models;
+using TransitNETesting.Utilities.Helpers;
 using Xunit;
 
 namespace TransitNETesting.Tests.UnitTests
 {
+
     public class ConfirmEmailChangeModelTests
     {
-        private readonly Mock<UserManager<TransitNEUser>> _userManagerMock;
-        private readonly Mock<SignInManager<TransitNEUser>> _signInManagerMock;
-        private readonly ConfirmEmailChangeModel _model;
-
-        public ConfirmEmailChangeModelTests()
-        {
-            _userManagerMock = new Mock<UserManager<TransitNEUser>>(MockBehavior.Strict,
-                new Mock<IUserStore<TransitNEUser>>().Object, null, null, null, null, null, null, null);
-
-            _signInManagerMock = new Mock<SignInManager<TransitNEUser>>(MockBehavior.Strict,
-                _userManagerMock.Object, null, null, null, null, null);
-
-            _model = new ConfirmEmailChangeModel(_userManagerMock.Object, _signInManagerMock.Object);
-        }
+        private Mock<IUserStore<TransitNEUser>> _userStoreMock;
+        private UserManager<TransitNEUser> _userManager;
+        private SignInManager<TransitNEUser> _signInManager;
 
         [Fact]
         public async Task OnGetAsync_MissingParameters_ReturnsRedirectToIndex()
         {
+            // Arrange
+            _userManager = IdentityTestHelpers.GetTestUserManager();
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+
+            var model = new ConfirmEmailChangeModel(_userManager, _signInManager);
+
             // Act
-            var result = await _model.OnGetAsync(null, null, null);
+            var result = await model.OnGetAsync(null, null, null);
 
             // Assert
             var redirectResult = Assert.IsType<RedirectToPageResult>(result);
@@ -43,70 +41,145 @@ namespace TransitNETesting.Tests.UnitTests
         public async Task OnGetAsync_UserNotFound_ReturnsNotFound()
         {
             // Arrange
-            _userManagerMock.Setup(um => um.FindByIdAsync("testUserId")).ReturnsAsync((TransitNEUser)null);
+            _userManager = IdentityTestHelpers.GetTestUserManager();
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+
+            // User not found scenario
+            _userStoreMock.Setup(s => s.FindByIdAsync("testUserId", It.IsAny<CancellationToken>()))
+                .ReturnsAsync((TransitNEUser)null);
+
+            var model = new ConfirmEmailChangeModel(_userManager, _signInManager);
 
             // Act
-            var result = await _model.OnGetAsync("testUserId", "test@example.com", "validCode");
+            var result = await model.OnGetAsync("testUserId", "test@example.com", "validCode");
 
             // Assert
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Equal("Unable to load user with ID 'testUserId'.", notFoundResult.Value);
+            var notFound = Assert.IsType<NotFoundObjectResult>(result);
+            Assert.Equal("Unable to load user with ID 'testUserId'.", notFound.Value);
         }
 
         [Fact]
         public async Task OnGetAsync_EmailChangeFails_ReturnsPageWithError()
         {
             // Arrange
+            _userManager = IdentityTestHelpers.GetTestUserManager();
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+
             var user = new TransitNEUser { Id = "testUserId", Email = "old@example.com" };
-            _userManagerMock.Setup(um => um.FindByIdAsync("testUserId")).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", "validCode"))
+
+            _userStoreMock.Setup(s => s.FindByIdAsync("testUserId", It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+
+            // Mock ChangeEmailAsync to fail
+            var userManagerMock = new Mock<UserManager<TransitNEUser>>(
+                _userStoreMock.Object,
+                null, null, new List<IUserValidator<TransitNEUser>>(),
+                new List<IPasswordValidator<TransitNEUser>>(),
+                null, null, null, null
+            );
+            
+            userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Error changing email" }));
 
+            // Replace _userManager with our userManagerMock.Object so the method calls are mocked
+            _userManager = userManagerMock.Object;
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+            var model = new ConfirmEmailChangeModel(_userManager, _signInManager);
+
             // Act
-            var result = await _model.OnGetAsync("testUserId", "new@example.com", "validCode");
+            var result = await model.OnGetAsync("testUserId", "new@example.com", "validCode");
 
             // Assert
             var pageResult = Assert.IsType<PageResult>(result);
-            Assert.Equal("Error changing email.", _model.StatusMessage);
+            Assert.Equal("Error changing email.", model.StatusMessage);
         }
 
         [Fact]
         public async Task OnGetAsync_UserNameChangeFails_ReturnsPageWithError()
         {
             // Arrange
+            _userManager = IdentityTestHelpers.GetTestUserManager();
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+
             var user = new TransitNEUser { Id = "testUserId", Email = "old@example.com" };
-            _userManagerMock.Setup(um => um.FindByIdAsync("testUserId")).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", "validCode"))
+            _userStoreMock.Setup(s => s.FindByIdAsync("testUserId", It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+
+            var userManagerMock = new Mock<UserManager<TransitNEUser>>(
+                _userStoreMock.Object,
+                null, null, new List<IUserValidator<TransitNEUser>>(),
+                new List<IPasswordValidator<TransitNEUser>>(),
+                null, null, null, null
+            );
+
+            // Success on ChangeEmailAsync
+            userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
-            _userManagerMock.Setup(um => um.SetUserNameAsync(user, "new@example.com"))
+
+            // Fail on SetUserNameAsync
+            userManagerMock.Setup(um => um.SetUserNameAsync(user, "new@example.com"))
                 .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Error changing user name" }));
 
+            _userManager = userManagerMock.Object;
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+            var model = new ConfirmEmailChangeModel(_userManager, _signInManager);
+
             // Act
-            var result = await _model.OnGetAsync("testUserId", "new@example.com", "validCode");
+            var result = await model.OnGetAsync("testUserId", "new@example.com", "validCode");
 
             // Assert
             var pageResult = Assert.IsType<PageResult>(result);
-            Assert.Equal("Error changing user name.", _model.StatusMessage);
+            Assert.Equal("Error changing user name.", model.StatusMessage);
         }
 
         [Fact]
         public async Task OnGetAsync_SuccessfulEmailChange_ReturnsPageWithSuccessMessage()
         {
             // Arrange
+            _userManager = IdentityTestHelpers.GetTestUserManager();
+            _signInManager = IdentityTestHelpers.GetTestSignInManager(_userManager);
+
             var user = new TransitNEUser { Id = "testUserId", Email = "old@example.com" };
-            _userManagerMock.Setup(um => um.FindByIdAsync("testUserId")).ReturnsAsync(user);
-            _userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", "validCode"))
+            _userStoreMock.Setup(s => s.FindByIdAsync("testUserId", It.IsAny<CancellationToken>()))
+                .ReturnsAsync(user);
+
+            var userManagerMock = new Mock<UserManager<TransitNEUser>>(
+                _userStoreMock.Object,
+                null, null, new List<IUserValidator<TransitNEUser>>(),
+                new List<IPasswordValidator<TransitNEUser>>(),
+                null, null, null, null
+            );
+
+            // Success on ChangeEmailAsync and SetUserNameAsync
+            userManagerMock.Setup(um => um.ChangeEmailAsync(user, "new@example.com", It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
-            _userManagerMock.Setup(um => um.SetUserNameAsync(user, "new@example.com"))
+            userManagerMock.Setup(um => um.SetUserNameAsync(user, "new@example.com"))
                 .ReturnsAsync(IdentityResult.Success);
-            _signInManagerMock.Setup(sm => sm.RefreshSignInAsync(user)).Returns(Task.CompletedTask);
+
+            // Mock RefreshSignInAsync
+            var signInManagerMock = new Mock<SignInManager<TransitNEUser>>(
+                userManagerMock.Object,
+                new Mock<IHttpContextAccessor>().Object,
+                new Mock<IUserClaimsPrincipalFactory<TransitNEUser>>().Object,
+                new Mock<IOptions<IdentityOptions>>().Object,
+                new Mock<ILogger<SignInManager<TransitNEUser>>>().Object,
+                new Mock<IAuthenticationSchemeProvider>().Object,
+                new Mock<IUserConfirmation<TransitNEUser>>().Object
+            );
+            signInManagerMock.Setup(sm => sm.RefreshSignInAsync(user))
+                .Returns(Task.CompletedTask);
+
+            _userManager = userManagerMock.Object;
+            _signInManager = signInManagerMock.Object;
+            var model = new ConfirmEmailChangeModel(_userManager, _signInManager);
 
             // Act
-            var result = await _model.OnGetAsync("testUserId", "new@example.com", "validCode");
+            var result = await model.OnGetAsync("testUserId", "new@example.com", "validCode");
 
             // Assert
             var pageResult = Assert.IsType<PageResult>(result);
-            Assert.Equal("Thank you for confirming your email change.", _model.StatusMessage);
+            Assert.Equal("Thank you for confirming your email change.", model.StatusMessage);
         }
     }
 }
+

@@ -3,7 +3,8 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-public class PatcoRouteInformationUatTests : IDisposable
+namespace TransitNETesting.Tests.SystemTests
+{public class PatcoRouteInformationUatTests : IDisposable
 {
     private readonly IWebDriver _driver;
     private readonly string _baseUrl;
@@ -85,4 +86,5 @@ public class PatcoRouteInformationUatTests : IDisposable
     {
         _driver.Quit();
     }
+}
 }

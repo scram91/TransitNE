@@ -5,6 +5,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Linq;
 
+namespace TransitNETesting.Tests.SystemTests
+{
 public class SeptaRouteInformationUatTests : IDisposable
 {
     private readonly IWebDriver _driver;
@@ -111,5 +113,6 @@ public class SeptaRouteInformationUatTests : IDisposable
     {
         _driver.Quit();
     }
+}
 }
 

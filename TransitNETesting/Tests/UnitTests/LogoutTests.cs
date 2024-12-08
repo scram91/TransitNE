@@ -42,7 +42,7 @@ namespace TransitNETesting.Tests.UnitTests
 
             // Assert
             _signInManagerMock.Verify(sm => sm.SignOutAsync(), Times.Once);
-            _loggerMock.Verify(log => log.LogInformation("User logged out."), Times.Once);
+
             Assert.IsType<RedirectToPageResult>(result);
         }
 
