@@ -52,7 +52,7 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Start Application
-        run: dotnet run --project ./YourProject/YourProject.csproj --urls=http://localhost:5000 &
+        run: dotnet run --project ./TransitNE/TransitNE.csproj --urls=http://localhost:5000 &
         # The '&' runs it in the background.
          
       - name: Wait for app to start
