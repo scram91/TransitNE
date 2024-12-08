@@ -33,13 +33,9 @@ jobs:
       run: dotnet build --no-restore
       
   dotnet_tests:
-    needs: build
     name: Unit Testing
     runs-on: ubuntu-latest
-    services:
-      selenium:
-        image: selenium/standalone-chrome
-        
+       
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -48,22 +44,24 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
       
-      - name: Update Database
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Start Application
+        run: dotnet run --project ./YourProject/YourProject.csproj --urls=http://localhost:5000 &
+        # The '&' runs it in the background.
+         
+      - name: Wait for app to start
         run: |
-          dotnet tool install --global dotnet-ef
-          dotnet tool restore
-          dotnet ef database update -c TransitNEContext -p TransitNE
-        env:
-          ASPNETCORE_ENVIRONMENT: Development
-          
-      - name: Unit Tests
-        run: dotnet test --configuration Release
-        env:
-          DOTNET_CLT_TELEMETRY_OPTOUT: true
-          DOTNET_NOLOGO: true
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-          NUGET_XMLDOC_MODE: skip
+          sleep 5
+          # Optionally, you can do curl checks to ensure the app is up
+      
+      - name: Run  Tests
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=./coverage/
    
   js_test:
     runs-on: ubuntu-latest
